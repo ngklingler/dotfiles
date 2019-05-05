@@ -35,12 +35,9 @@ function install_vim_config () {
 
 function install_necessary_utils () {
     git clone https://github.com/ngklingler/utils.git $HOME/utils
-    cd $HOME/utils
     utils='create_or_attach_tmux'
     for util in $utils; do
-        cd $util
-        cargo install
-        cd ..
+        cargo install -f --path $HOME/utils/$util
     done
 }
 
