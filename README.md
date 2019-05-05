@@ -10,3 +10,11 @@ git fetch
 git checkout origin/master -ft
 ```
 this may eventually be replaced with a symlink system
+
+## todo
+[ ] add tmux config
+[ ] add vim submodule
+[ ] add utils submodule
+[ ] move to symlink system
+[ ] create install script
+[ ] create update script
