@@ -1,2 +1,4 @@
 # start by ignoring everything
 *
+# files to track here
+!.bashrc
