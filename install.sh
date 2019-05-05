@@ -20,8 +20,15 @@ function create_symlinks () {
     done
 }
 
+function install_tpm () {
+    tpm_dir=$HOME/.tmux/plugins/tpm
+    git_url='https://github.com/tmux-plugins/tpm'
+    [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
+}
+
 function install () {
     create_symlinks
+    install_tpm
 }
 
 install
