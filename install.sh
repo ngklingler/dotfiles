@@ -3,8 +3,9 @@
 function create_symlinks () {
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$HOME/old_dotfiles # backup originals in case something breaks
-    files="bashrc" # space separated list of files to symlink
+    files="bashrc tmux.conf" # space separated list of files to symlink
 
+    [ -d "$backup_dir" ] && rm -rf $backup_dir
     mkdir -p $backup_dir
     
     for file in $files; do

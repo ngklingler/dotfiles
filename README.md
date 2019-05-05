@@ -2,20 +2,13 @@
 my dotfiles
 
 ## installation
-run the following in the home directory
-```bash
-git init
-git remote add origin https://github.com/ngklingler/dotfiles.git # or https://github.com/ngklingler/dotfiles.git
-git fetch
-git checkout origin/master -ft
-```
-this may eventually be replaced with a symlink system
+clone this repository, and run `bash install.sh`
 
 ## todo
 [ ] add tmux config
 [ ] add vim submodule
 [ ] add utils submodule
-[ ] move to symlink system
-[ ] create install script
+[x] move to symlink system
+[x] create install script
 [ ] create update script
-[ ] improve bash completion (C-n and C-p work w/ vi mode, `bind TAB:menu-complete` is also an option)
+[x] improve bash completion (C-n and C-p work w/ vi mode, `bind TAB:menu-complete` is also an option)
