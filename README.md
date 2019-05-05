@@ -18,3 +18,4 @@ this may eventually be replaced with a symlink system
 [ ] move to symlink system
 [ ] create install script
 [ ] create update script
+[ ] improve bash completion (C-n and C-p work w/ vi mode, `bind TAB:menu-complete` is also an option)
