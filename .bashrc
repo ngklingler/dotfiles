@@ -4,6 +4,7 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 export PS1="> "
 
 set -o vi # run bind -P to see keybindings
+bind TAB:menu-complete # TAB to cycle through completion options
 
 [ -z "$(command -v rg)" ] || alias todo='rg TODO'
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
