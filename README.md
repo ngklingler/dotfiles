@@ -5,9 +5,9 @@ my dotfiles
 clone this repository, and run `bash install.sh`
 
 ## todo
-[ ] add tmux config
-[ ] add vim submodule
-[ ] add utils submodule
+[x] add tmux config
+[x] add vim submodule (just made it clone directory vs submodule)
+[x] add utils submodule (or clone dir)
 [x] move to symlink system
 [x] create install script
 [ ] create update script

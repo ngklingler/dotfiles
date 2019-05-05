@@ -26,9 +26,29 @@ function install_tpm () {
     [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
 }
 
+function install_vim_config () {
+    vimdir=$HOME/.vim
+    [ -d "$vimdir" ] && rm -rf $vimdir
+    [ -f $HOME/.vimrc ] && rm $HOME/.vimrc
+    git clone --recurce-submodules https://github.com/ngklingler/vim.git $vimdir
+}
+
+function install_necessary_utils () {
+    git clone https://github.com/ngklingler/utils.git $HOME/utils
+    cd $HOME/utils
+    utils='create_or_attach_tmux'
+    for util in $utils; do
+        cd $util
+        cargo install
+        cd ..
+    done
+}
+
 function install () {
     create_symlinks
     install_tpm
+    install_vim_config
+    install_necessary_utils
 }
 
 install
