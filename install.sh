@@ -30,7 +30,7 @@ function install_vim_config () {
     vimdir=$HOME/.vim
     [ -d "$vimdir" ] && rm -rf $vimdir
     [ -f $HOME/.vimrc ] && rm $HOME/.vimrc
-    git clone --recurce-submodules https://github.com/ngklingler/vim.git $vimdir
+    git clone --recurse-submodules https://github.com/ngklingler/vim.git $vimdir
 }
 
 function install_necessary_utils () {
