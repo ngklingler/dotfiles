@@ -3,7 +3,7 @@
 function create_symlinks () {
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$HOME/old_dotfiles # backup originals in case something breaks
-    files="bashrc tmux.conf" # space separated list of files to symlink
+    files="bashrc tmux.conf alacritty.yml" # space separated list of files to symlink
 
     [ -d "$backup_dir" ] && rm -rf $backup_dir
     mkdir -p $backup_dir
@@ -33,9 +33,10 @@ function install_vim_config () {
     git clone --recurse-submodules https://github.com/ngklingler/vim.git $vimdir
 }
 
+# TODO find work around (python or bash?) in case rust not installed
 function install_necessary_utils () {
     git clone https://github.com/ngklingler/utils.git $HOME/utils
-    utils='create_or_attach_tmux'
+    utils='create_or_attach_tmux tmux_pane_status'
     for util in $utils; do
         cargo install -f --path $HOME/utils/$util
     done
