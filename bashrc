@@ -3,7 +3,7 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
 # TODO change prompt if no tmux
 TOLASTLINE=$(tput cup "$LINES")
-export PS1="\[$TOLASTLINE\]$(tmux refresh-client -S)> "
+export PS1="\[$TOLASTLINE\]> "
 
 set -o vi # run bind -P to see keybindings
 bind TAB:menu-complete # TAB to cycle through completion options
