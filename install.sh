@@ -34,6 +34,7 @@ function install_vim_config () {
 }
 
 # TODO find work around (python or bash?) in case rust not installed
+# TODO issue with utils in different branches
 function install_necessary_utils () {
     git clone https://github.com/ngklingler/utils.git $HOME/utils
     utils='create_or_attach_tmux tmux_pane_status'
