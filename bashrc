@@ -19,6 +19,7 @@ bind TAB:menu-complete # TAB to cycle through completion options
 [ -z "$(command -v rg)" ] || alias todo='rg TODO'
 # use better version if available
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
+[ -z "$(command -v lsd)" ] || alias lst='lsd --tree'
 [ -z "$(command -v bat)" ] || alias cat='bat'
 # triggers
 cd () { 
