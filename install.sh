@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# TODO echo 'source ~/.bashrc' >> ~/.bash_profile
+
 function create_symlinks () {
     dir=$HOME/dotfiles # directory of the git repo containing this file
-    backup_dir=$HOME/old_dotfiles # backup originals in case something breaks
-    files="bashrc tmux.conf alacritty.yml" # space separated list of files to symlink
+    backup_dir=$dir/old_dotfiles # backup originals in case something breaks
+    files="bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim"
 
     [ -d "$backup_dir" ] && rm -rf $backup_dir
-    mkdir -p $backup_dir
+    mkdir -p $backup_dir/config/alacritty
+    mkdir -p $backup_dir/config/nvim
     
     for file in $files; do
         # if file exists or file exists as symlink then copy and delete
@@ -18,6 +21,7 @@ function create_symlinks () {
         fi
         ln -s $dir/$file $HOME/.$file # create symlink
     done
+
 }
 
 function install_tpm () {

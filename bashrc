@@ -1,3 +1,5 @@
+source $HOME/dotfiles/machine.sh
+
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 [ -z "$PS1" ] && return # return if not interactive
 
@@ -24,6 +26,7 @@ alias cat!="$(which cat)"
 # use better version if available
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
 [ -z "$(command -v bat)" ] || alias cat='bat'
+[ -z "$(command -v nvim)" ] || alias vim='nvim'
 # triggers
 cd () { builtin cd "$@" && ls; }
 
