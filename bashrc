@@ -9,7 +9,7 @@ if type tmux >/dev/null 2>/dev/null; then
     export PS1="> "
 else
     PROMPT_COMMAND='(retval=$?;tput cup "$LINES"l exit $retval)'
-    # TODO this below probably won't refresh
+    # TODO this might not refresh
     export PS1='$(tmux_pane_status $(pwd) $(echo $HOME)) > '
 fi
 
@@ -18,6 +18,7 @@ bind 'set completion-ignore-case on'
 bind 'set show-all-if-unmodified on'
 
 # aliases
+alias cat!="$(which cat)"
 [ -z "$(command -v rg)" ] || alias todo='rg TODO'
 [ -z "$(command -v lsd)" ] || alias lst='lsd --tree'
 # use better version if available
