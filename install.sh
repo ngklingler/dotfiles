@@ -24,6 +24,7 @@ function create_symlinks () {
 
 }
 
+
 function install_tpm () {
     # TODO install plugins too
     tpm_dir=$HOME/.tmux/plugins/tpm
@@ -31,11 +32,34 @@ function install_tpm () {
     [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
 }
 
+
 function install_vim_config () {
-    vimdir=$HOME/.vim
-    [ -d "$vimdir" ] && rm -rf $vimdir
-    [ -f $HOME/.vimrc ] && rm $HOME/.vimrc
-    git clone --recurse-submodules https://github.com/ngklingler/vim.git $vimdir
+    cd $HOME
+    rm -rf $HOME/.vim
+    git clone https://github.vom/ngklingler/vim.git $HOME/.vim
+    cd $HOME/.vim
+    git submodule init
+    # TODO install pynvim for LSP?
+    # Things like submodule update and LSP install are done on update too
+}
+
+
+function check_vim_config () {
+    # TODO Should vim install be part of vim files?
+    cwd=$(pwd)
+    if [ -d "$HOME/.vim" ] then
+        cd $HOME/.vim
+        git pull || install_vim_config
+    fi
+    cwd=$(pwd)
+    if [ -f $HOME/.vimrc ] then
+        cp -a $HOME/.vimrc $HOME/dotfiles/old_dotfiles/.vimrc
+        rm $HOME/.vimrc
+    fi
+    cd $HOME/.vim
+    git submodule update
+    bash $HOME/.vim/pack/plugins/start/LanguageClient-neovim/install.sh
+    cd $cwd
 }
 
 # TODO find work around (python or bash?) in case rust not installed
