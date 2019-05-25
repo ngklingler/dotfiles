@@ -8,8 +8,11 @@ function create_symlinks () {
     files="bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim"
 
     [ -d "$backup_dir" ] && rm -rf $backup_dir
+    # TODO make this programatic off list
     mkdir -p $backup_dir/config/alacritty
     mkdir -p $backup_dir/config/nvim
+    mkdir -p $HOME/.config/alacritty
+    mkdir -p $HOME/.config/nvim
     
     for file in $files; do
         # if file exists or file exists as symlink then copy and delete
@@ -36,7 +39,7 @@ function install_tpm () {
 function install_vim_config () {
     cd $HOME
     rm -rf $HOME/.vim
-    git clone https://github.vom/ngklingler/vim.git $HOME/.vim
+    git clone https://github.com/ngklingler/vim.git $HOME/.vim
     cd $HOME/.vim
     git submodule init
     # TODO install pynvim for LSP?
@@ -47,12 +50,14 @@ function install_vim_config () {
 function check_vim_config () {
     # TODO Should vim install be part of vim files?
     cwd=$(pwd)
-    if [ -d "$HOME/.vim" ] then
+    if [ -d "$HOME/.vim" ]
+    then
         cd $HOME/.vim
         git pull || install_vim_config
     fi
     cwd=$(pwd)
-    if [ -f $HOME/.vimrc ] then
+    if [ -f $HOME/.vimrc ]
+    then
         cp -a $HOME/.vimrc $HOME/dotfiles/old_dotfiles/.vimrc
         rm $HOME/.vimrc
     fi
@@ -80,7 +85,7 @@ function install_necessary_utils () {
 function install () {
     create_symlinks
     install_tpm
-    install_vim_config
+    check_vim_config
     install_necessary_utils
 }
 
