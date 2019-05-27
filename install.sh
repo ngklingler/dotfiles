@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO echo 'source ~/.bashrc' >> ~/.bash_profile
-
 function create_symlinks () {
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$dir/old_dotfiles # backup originals in case something breaks
@@ -55,7 +53,6 @@ function check_vim_config () {
         cd $HOME/.vim
         git pull || install_vim_config
     fi
-    cwd=$(pwd)
     if [ -f $HOME/.vimrc ]
     then
         cp -a $HOME/.vimrc $HOME/dotfiles/old_dotfiles/.vimrc
@@ -67,15 +64,11 @@ function check_vim_config () {
     cd $cwd
 }
 
-# TODO find work around (python or bash?) in case rust not installed
-# TODO BUG issue with utils in different branches
 function install_necessary_utils () {
     current_dir=$(pwd)
     git clone https://github.com/ngklingler/utils.git $HOME/utils
     utils='create_or_attach_tmux tmux_pane_status'
     cd $HOME/utils
-    # TODO stick to master
-    git checkout dev
     for util in $utils; do
         cargo install -f --path $HOME/utils/$util
     done
@@ -83,6 +76,16 @@ function install_necessary_utils () {
 }
 
 function install () {
+    # check if rust installed, if not install it
+    if [ -d "$HOME/.cargo/bin/" ]
+    then
+        command -v cargo || export PATH="$PATH:$HOME/.cargo/bin"
+    else
+        curl https://sh.rustup.rs -sSf | sh
+        export PATH="$PATH:$HOME/.cargo/bin"
+    fi
+
+    echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     create_symlinks
     install_tpm
     check_vim_config
