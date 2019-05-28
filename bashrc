@@ -21,10 +21,17 @@ alias ls!="$(which ls)"
 [ -z "$(command -v rg)" ] || alias todo='rg TODO'
 [ -z "$(command -v lsd)" ] || alias lst='lsd --tree'
 # use better version if available
-[ -z "$(command -v vim)" ] || alias vi='vim'
+if ! [ -z "$(command -v vim)" ]
+then
+    if ! [ -z "$(command -v nvim)" ]
+    then
+        alias vi='nvim'
+    else
+        alias vi='vim'
+    fi
+fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
 [ -z "$(command -v bat)" ] || alias cat='bat'
-[ -z "$(command -v nvim)" ] || alias vim='nvim'
 # triggers
 cd () { builtin cd "$@" && ls; }
 
