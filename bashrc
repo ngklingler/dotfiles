@@ -11,7 +11,9 @@ if [ -z "$(command -v tmux)" ]; then
     export PS1='$(tmux_pane_status $(pwd) $(echo $HOME) 2> /dev/null) > '
 else
     [ -z "${TMUX}" ] && $(create_or_attach_tmux)
-    PROMPT_COMMAND='(retval=$?;tput cup "$LINES"; exit $retval) && tmux refresh-client -S'
+    PROMPT_COMMAND='(retval=$?;tput cup "$LINES"; exit $retval) && '
+    PROMPT_COMMAND+='tmux set pane-border-format " #(tmux_pane_status #{pane_current_path} $HOME)"'
+
     export PS1="> "
 fi
 
@@ -37,6 +39,5 @@ cd () { builtin cd "$@" && ls; }
 
 EDITOR=vi
 GIT_EDITOR=vi
-set -o vi # run bind -P to see keybindings
 bind 'set completion-ignore-case on'
 bind 'set show-all-if-unmodified on'
