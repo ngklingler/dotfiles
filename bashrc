@@ -28,8 +28,12 @@ then
     if ! [ -z "$(command -v nvim)" ]
     then
         alias vi='nvim'
+        EDITOR=nvim
+        GIT_EDITOR=nvim
     else
         alias vi='vim'
+        EDITOR=vim
+        GIT_EDITOR=vim
     fi
 fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
@@ -37,7 +41,5 @@ fi
 # triggers
 cd () { builtin cd "$@" && ls; }
 
-EDITOR=vi
-GIT_EDITOR=vi
 bind 'set completion-ignore-case on'
 bind 'set show-all-if-unmodified on'
