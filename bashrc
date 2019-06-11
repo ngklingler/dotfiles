@@ -20,6 +20,7 @@ fi
 # aliases
 alias cat!="$(which cat)"
 alias ls!="$(which ls)"
+alias cd!="builtin cd"
 [ -z "$(command -v rg)" ] || alias todo='rg TODO'
 [ -z "$(command -v lsd)" ] || alias lst='lsd --tree'
 # use better version if available
@@ -30,6 +31,7 @@ then
         alias vi='nvim'
         EDITOR=nvim
         GIT_EDITOR=nvim
+        alias vimdiff='nvim -d'
     else
         alias vi='vim'
         EDITOR=vim
@@ -38,6 +40,9 @@ then
 fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
 [ -z "$(command -v bat)" ] || alias cat='bat'
+function gitdiff () {
+    vimdiff $1 <(git show $2:$1)
+}
 # triggers
 cd () { builtin cd "$@" && ls; }
 
