@@ -41,7 +41,7 @@ fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
 [ -z "$(command -v bat)" ] || alias cat='bat'
 function gitdiff () {
-    vimdiff $1 <(git show $2:$1)
+    vimdiff $1 <(git show $2:./$1)
 }
 # triggers
 cd () { builtin cd "$@" && ls; }
