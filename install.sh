@@ -46,8 +46,8 @@ function install_necessary_utils () {
 setup_environment () {
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
-    sh /home/ngklingler/.tmux/plugins/tpm/bindings/install_plugins
     vi -c "PlugInstall|xa"  # install/update all vim plugins
+    sh /home/ngklingler/.tmux/plugins/tpm/bindings/install_plugins
 }
 
 function install () {
@@ -65,6 +65,7 @@ function install () {
     create_symlinks
     install_tpm
     install_necessary_utils
+    setup_environment
 }
 
 install
