@@ -1,4 +1,5 @@
 source $HOME/dotfiles/machine.sh
+source $HOME/dotfiles/git-completion.bash
 
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 [ -z "$PS1" ] && return # return if not interactive
@@ -13,7 +14,6 @@ else
     [ -z "${TMUX}" ] && $(create_or_attach_tmux)
     PROMPT_COMMAND='(retval=$?;tput cup "$LINES"; exit $retval) && '
     PROMPT_COMMAND+='tmux set pane-border-format " #(tmux_pane_status #{pane_current_path} $HOME)"'
-
     export PS1="> "
 fi
 

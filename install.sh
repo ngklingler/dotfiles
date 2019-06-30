@@ -3,7 +3,7 @@
 function create_symlinks () {
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$dir/old_dotfiles # backup originals in case something breaks
-    files="bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim"
+    files="vimrc bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim"
 
     [ -d "$backup_dir" ] && rm -rf $backup_dir
     # TODO make this programatic off list
@@ -25,43 +25,11 @@ function create_symlinks () {
 
 }
 
-
 function install_tpm () {
     # TODO install plugins too
     tpm_dir=$HOME/.tmux/plugins/tpm
     git_url='https://github.com/tmux-plugins/tpm'
     [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
-}
-
-
-function install_vim_config () {
-    cd $HOME
-    rm -rf $HOME/.vim
-    git clone https://github.com/ngklingler/vim.git $HOME/.vim
-    cd $HOME/.vim
-    git submodule init
-    # TODO install pynvim for LSP?
-    # Things like submodule update and LSP install are done on update too
-}
-
-
-function check_vim_config () {
-    # TODO Should vim install be part of vim files?
-    cwd=$(pwd)
-    if [ -d "$HOME/.vim" ]
-    then
-        cd $HOME/.vim
-        git pull || install_vim_config
-    fi
-    if [ -f $HOME/.vimrc ]
-    then
-        cp -a $HOME/.vimrc $HOME/dotfiles/old_dotfiles/.vimrc
-        rm $HOME/.vimrc
-    fi
-    cd $HOME/.vim
-    git submodule update
-    bash $HOME/.vim/pack/plugins/start/LanguageClient-neovim/install.sh
-    cd $cwd
 }
 
 function install_necessary_utils () {
@@ -75,6 +43,13 @@ function install_necessary_utils () {
     cd $current_dir
 }
 
+setup_environment () {
+    curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    source $HOME/.bashrc
+    sh /home/ngklingler/.tmux/plugins/tpm/bindings/install_plugins
+    vi -c "PlugInstall|xa"  # install/update all vim plugins
+}
+
 function install () {
     # check if rust installed, if not install it
     if [ -d "$HOME/.cargo/bin/" ]
@@ -84,11 +59,11 @@ function install () {
         curl https://sh.rustup.rs -sSf | sh
         export PATH="$PATH:$HOME/.cargo/bin"
     fi
+    # TODO rustup default stable, check cc
 
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     create_symlinks
     install_tpm
-    check_vim_config
     install_necessary_utils
 }
 
