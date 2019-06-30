@@ -1,5 +1,4 @@
 #!/bin/bash
-
 function create_symlinks () {
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$dir/old_dotfiles # backup originals in case something breaks
@@ -23,30 +22,34 @@ function create_symlinks () {
         ln -s $dir/$file $HOME/.$file # create symlink
     done
 
+    if [ -d "$HOME/.vim" ]
+    then
+        cp -r $HOME/.vim $backup_dir/vim
+        rm -rf $HOME/.vim
+    fi
+
 }
 
 function install_tpm () {
-    # TODO install plugins too
     tpm_dir=$HOME/.tmux/plugins/tpm
     git_url='https://github.com/tmux-plugins/tpm'
     [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
 }
 
 function install_necessary_utils () {
-    current_dir=$(pwd)
     git clone https://github.com/ngklingler/utils.git $HOME/utils
     utils='create_or_attach_tmux tmux_pane_status'
-    cd $HOME/utils
+    pushd $HOME/utils
     for util in $utils; do
         cargo install -f --path $HOME/utils/$util
     done
-    cd $current_dir
+    popd
 }
 
 setup_environment () {
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
-    vi -c "PlugInstall|xa"  # install/update all vim plugins
+    vi -c "PlugInstall|xa"  # TODO fix this: quits before plugins are installed
     sh /home/ngklingler/.tmux/plugins/tpm/bindings/install_plugins
 }
 
@@ -59,7 +62,8 @@ function install () {
         curl https://sh.rustup.rs -sSf | sh
         export PATH="$PATH:$HOME/.cargo/bin"
     fi
-    # TODO rustup default stable, check cc
+    rustup default stable
+    # TODO check (g)cc installed for rust linker
 
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     create_symlinks
