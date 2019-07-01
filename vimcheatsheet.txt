@@ -68,7 +68,7 @@ windows:
     C-w c to close current window
     C-w o to close all but current window
     :new to split horizontal, :vnew for vertical
-    :vert sb N to open buffer N in new vertical window
+    :vert sb N to open buffer N in new vertical window, :sb N for horizontal
 
 buffers:
     :set hidden for hidden buffers
@@ -76,7 +76,7 @@ buffers:
     :bn for next, :bp for previous
     :bd to delete buffer
     :b N to go to buffer N
-    \\ set in vimrc to jump to next buffer
+    - set in vimrc to jump to next buffer
 
 completion:
     Note: completion is best served with a plugin

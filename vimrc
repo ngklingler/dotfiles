@@ -94,7 +94,7 @@ imap (<CR> (<CR>)<ESC>O
 imap {<CR> {<CR>}<ESC>O
 imap [<CR> [<CR>]<ESC>O
 " Quotes require this special function, otherwise then get infinitely matched
-function! QuoteClose(char)
+function! CloseQuote(char)
     let char = a:char
     if getline('.')[col('.') - 1] != char
         return char . char . "\<left>"
@@ -102,8 +102,8 @@ function! QuoteClose(char)
         return char
     endif
 endfunction
-imap ' <c-r>=QuoteClose("'")<CR>
-imap " <c-r>=QuoteClose('"')<CR>
+imap ' <c-r>=CloseQuote("'")<CR>
+imap " <c-r>=CloseQuote('"')<CR>
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs

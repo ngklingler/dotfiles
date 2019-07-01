@@ -51,7 +51,6 @@ function install_necessary_utils () {
 setup_environment () {
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
-    vi -c "PlugInstall|xa"  # TODO fix this: quits before plugins are installed
     sh /home/ngklingler/.tmux/plugins/tpm/bindings/install_plugins
 }
 
