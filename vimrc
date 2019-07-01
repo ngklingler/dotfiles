@@ -59,8 +59,8 @@ let g:signify_vcs_list = ['git']
 let g:signify_realtime = 1
 set signcolumn=yes  " Keep sign column open even if no git changes
 let g:onedark_termcolors=256
-autocmd ColorScheme * call onedark#extend_highlight("Normal", { "bg": { "cterm": 232, "gui": "#080808", "cterm16": 0 } })
 colorscheme onedark
+highlight Normal ctermbg=232  " Pitch black background
 " TODO Dependencies need to be installed
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
@@ -70,14 +70,10 @@ let g:LanguageClient_useVirtualText = 0  " Make it so error messages are not sho
 set completeopt-=preview  " Make it so completions don't open a preview window
 
 " Key mappings
-" Set leader
-"let mapleader="`"
-"" Map ` to : in normal mode (more ergonomic)
-"nmap <leader> :
-"" Map `` to cycle through buffers
-"nmap <leader><leader> :bn<CR>
-"" Set `= to cycle windows in normal mode
-"nmap <leader>= <C-w><C-w>
+" Set ` to cycle buffers
+nmap - :bn<CR>
+" Set = to cycle windows in normal mode
+nmap = <C-w><C-w>
 " Toggle folds with q in normal mode
 nmap q za
 " Make backspace work in normal mode
@@ -90,6 +86,24 @@ imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " C-n Toggles netrw in normal
 map <C-n> :Lexplore<CR>
+" autoclose (),{},[]
+imap ( ()<left>
+imap [ []<left>
+imap { {}<left>
+imap (<CR> (<CR>)<ESC>O
+imap {<CR> {<CR>}<ESC>O
+imap [<CR> [<CR>]<ESC>O
+" Quotes require this special function, otherwise then get infinitely matched
+function! QuoteClose(char)
+    let char = a:char
+    if getline('.')[col('.') - 1] != char
+        return char . char . "\<left>"
+    else
+        return char
+    endif
+endfunction
+imap ' <c-r>=QuoteClose("'")<CR>
+imap " <c-r>=QuoteClose('"')<CR>
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs

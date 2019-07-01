@@ -14,16 +14,14 @@ function create_symlinks () {
     for file in $files; do
         # if file exists or file exists as symlink then copy and delete
         # use copy so if it is a symlink there will be no problems
-        if [ -f $HOME/.$file ] || [ -L $HOME/.$file ]
-        then
+        if [ -f $HOME/.$file ] || [ -L $HOME/.$file ]; then
             cp -a $HOME/.$file $backup_dir/$file
             rm $HOME/.$file
         fi
         ln -s $dir/$file $HOME/.$file # create symlink
     done
 
-    if [ -d "$HOME/.vim" ]
-    then
+    if [ -d "$HOME/.vim" ]; then
         cp -r $HOME/.vim $backup_dir/vim
         rm -rf $HOME/.vim
     fi
@@ -44,6 +42,10 @@ function install_necessary_utils () {
         cargo install -f --path $HOME/utils/$util
     done
     popd
+    utils='lsd ripgrep bat'
+    for util in $utils; do
+        cargo install $util
+    done
 }
 
 setup_environment () {
@@ -55,8 +57,7 @@ setup_environment () {
 
 function install () {
     # check if rust installed, if not install it
-    if [ -d "$HOME/.cargo/bin/" ]
-    then
+    if [ -d "$HOME/.cargo/bin/" ]; then
         command -v cargo || export PATH="$PATH:$HOME/.cargo/bin"
     else
         curl https://sh.rustup.rs -sSf | sh
