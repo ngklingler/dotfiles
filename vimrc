@@ -51,6 +51,7 @@ call plug#begin()
     Plug 'sheerun/vim-polyglot'
     Plug 'joshdick/onedark.vim'
     Plug 'mhinz/vim-signify'
+    Plug 'python/black'
 call plug#end()
 
 " Plugin settings
@@ -68,6 +69,9 @@ let g:LanguageClient_serverCommands = {
     \ }
 let g:LanguageClient_useVirtualText = 0  " Make it so error messages are not shown inline on screen
 set completeopt-=preview  " Make it so completions don't open a preview window
+let g:black_skip_string_normalization = 1
+let g:black_linelength = 79
+autocmd BufWritePre *.py silent! execute ':silent! Black'
 
 " Key mappings
 " Set ` to cycle buffers

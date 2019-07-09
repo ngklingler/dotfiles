@@ -36,6 +36,7 @@ function install_tpm () {
 
 function install_necessary_utils () {
     git clone https://github.com/ngklingler/utils.git $HOME/utils
+    # TODO for above, if exists just git pull
     utils='create_or_attach_tmux tmux_pane_status'
     pushd $HOME/utils
     for util in $utils; do
@@ -44,14 +45,14 @@ function install_necessary_utils () {
     popd
     utils='lsd ripgrep bat'
     for util in $utils; do
-        cargo install $util
+        cargo install -f $util
     done
 }
 
 setup_environment () {
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
-    sh /home/ngklingler/.tmux/plugins/tpm/bindings/install_plugins
+    sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
 }
 
 function install () {
