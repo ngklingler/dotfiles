@@ -52,6 +52,8 @@ call plug#begin()
     Plug 'joshdick/onedark.vim'
     Plug 'mhinz/vim-signify'
     Plug 'python/black'
+    Plug 'vimwiki/vimwiki'
+    Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 " Plugin settings
