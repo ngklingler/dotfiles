@@ -90,3 +90,10 @@ visual mode stuff:
     :norm executes normal mode commands, useful for commenting and indentation changes
     :norm i# to insert # at BOL, I# at first non-whitespace
     :norm ^x to delete one, ^xx to delete two (//)
+
+macros:
+    press q followed by a letter a-z to start recording a macro
+    the letter you pick a-z is the register where the macro is stored
+    start entering any commands you wish (other than q)
+    press q to finish recording the macro
+    play the macro by hitting @ plus the register you specified, @@ replays last macro

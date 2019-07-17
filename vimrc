@@ -81,7 +81,7 @@ nmap - :bn<CR>
 " Set = to cycle windows in normal mode
 nmap = <C-w><C-w>
 " Toggle folds with q in normal mode
-nmap q za
+nmap <space> za
 " Make backspace work in normal mode
 nmap <BS> X
 " Make <Esc><Esc> clear search highlights
