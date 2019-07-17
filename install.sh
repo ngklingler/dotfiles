@@ -52,10 +52,16 @@ function install_necessary_utils () {
 setup_environment () {
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
-    sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
+    if [ command -v tmux ]; then
+        sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
+    else
+        echo 'Seems TMUX is not installed, you may want to install that and resource bashrc followed by pressing prefix + I (should be backslash plus capital I) to install tmux plugins'
+    fi
 }
 
 function install () {
+    # touch machine.sh if doesn't exist so bashrc source doesn't complain
+    [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
     # check if rust installed, if not install it
     if [ -d "$HOME/.cargo/bin/" ]; then
         command -v cargo || export PATH="$PATH:$HOME/.cargo/bin"
