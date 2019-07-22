@@ -13,6 +13,9 @@ set hls ic is smartcase  " Highlight search results, ignore case on searches, se
 set foldmethod=indent  " Fold lines on same indent
 set foldlevel=99  " Open all folds
 set fileformat=unix  " newline line endings
+set fileignorecase  " turn off case sensitive completions for file and dir completions
+set wildmode=longest,list,full  " Bash like file completions in ex command
+set wildmenu  " Disable cycle menu in ex file completions
 
 " Things that are specific to nvim vs vim
 if has("nvim")
