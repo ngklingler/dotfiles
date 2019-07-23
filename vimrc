@@ -57,10 +57,10 @@ call plug#begin()
     Plug 'python/black'
     Plug 'vimwiki/vimwiki'
     Plug 'junegunn/vim-easy-align'
+    Plug 'scrooloose/nerdtree'
 call plug#end()
 
 " Plugin settings
-let g:netrw_dirhistmax = 0  " Stop netrw from saving a history file, below toggles netrw
 let g:signify_vcs_list = ['git']
 let g:signify_realtime = 1
 set signcolumn=yes  " Keep sign column open even if no git changes
@@ -93,8 +93,8 @@ nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " Enter selects an autocompletion if in the autocompletion menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-" C-n Toggles netrw in normal
-map <C-n> :Lexplore<CR>
+" C-n Toggles NERDTree
+map <C-n> :NERDTreeToggle<CR>
 " autoclose (),{},[]
 imap ( ()<left>
 imap [ []<left>
