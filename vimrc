@@ -58,6 +58,8 @@ call plug#begin()
     Plug 'vimwiki/vimwiki'
     Plug 'junegunn/vim-easy-align'
     Plug 'scrooloose/nerdtree'
+    Plug 'tmux-plugins/vim-tmux-focus-events'
+    Plug 'roxma/vim-tmux-clipboard'
 call plug#end()
 
 " Plugin settings
