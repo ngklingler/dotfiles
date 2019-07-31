@@ -1,5 +1,6 @@
 #!/bin/bash
 function create_symlinks () {
+    # TODO can we check if they are already symlinks to this location?
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$dir/old_dotfiles # backup originals in case something breaks
     files="vimrc bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim"
@@ -36,23 +37,27 @@ function install_tpm () {
 
 function install_necessary_utils () {
     git clone https://github.com/ngklingler/utils.git $HOME/utils
-    # TODO for above, if exists just git pull
+    # TODO make above a gitmodule in the dotfiles folder
     utils='create_or_attach_tmux tmux_pane_status'
     pushd $HOME/utils
+    # TODO implement version checking so we don't reinstall the same version
     for util in $utils; do
         cargo install -f --path $HOME/utils/$util
     done
     popd
     utils='lsd ripgrep bat'
+    # TODO upgrade flag?
     for util in $utils; do
         cargo install -f $util
     done
 }
 
 setup_environment () {
+    # TODO version control or don't do if exists?
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
     if [ command -v tmux ]; then
+        # TODO is this working?
         sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
     else
         echo 'Seems TMUX is not installed, you may want to install that and resource bashrc followed by pressing prefix + I (should be backslash plus capital I) to install tmux plugins'

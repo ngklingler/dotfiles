@@ -2,13 +2,13 @@ set encoding=utf-8
 set list listchars=tab:!·,extends:$,precedes:$,space:·  " Characters to indicate whitespace
 set splitbelow splitright  " More sensible window splits
 set tabstop=4 shiftwidth=4 expandtab  " Tabs are 4 spaces
-set colorcolumn=80 " have a highlighted column for PEP8
+set colorcolumn=80  " have a highlighted column for PEP8
 set nowrap  " Don't wrap long lines
 set showmatch " highlight matching (, [, {
-set number " show line numbers
+set number  " show line numbers
 set noswapfile  " Disable swap files
-set mouse=a " use mouse for selection, scrolling, eta
-set hidden " allow hidden buffers
+set mouse=a  " use mouse for selection, scrolling, eta
+set hidden  " allow hidden buffers
 set hls ic is smartcase  " Highlight search results, ignore case on searches, search as you type
 set foldmethod=indent  " Fold lines on same indent
 set foldlevel=99  " Open all folds
@@ -16,6 +16,7 @@ set fileformat=unix  " newline line endings
 set fileignorecase  " turn off case sensitive completions for file and dir completions
 set wildmode=longest,list,full  " Bash like file completions in ex command
 set wildmenu  " Disable cycle menu in ex file completions
+set clipboard+=unnamedplus  " Use the + register on copy (the system clipboard)
 
 " Things that are specific to nvim vs vim
 if has("nvim")
@@ -59,7 +60,6 @@ call plug#begin()
     Plug 'junegunn/vim-easy-align'
     Plug 'scrooloose/nerdtree'
     Plug 'tmux-plugins/vim-tmux-focus-events'
-    Plug 'roxma/vim-tmux-clipboard'
 call plug#end()
 
 " Plugin settings
