@@ -11,7 +11,7 @@ function create_symlinks () {
     mkdir -p $backup_dir/config/nvim
     mkdir -p $HOME/.config/alacritty
     mkdir -p $HOME/.config/nvim
-    
+
     for file in $files; do
         # if file exists or file exists as symlink then copy and delete
         # use copy so if it is a symlink there will be no problems
@@ -56,12 +56,12 @@ setup_environment () {
     # TODO version control or don't do if exists?
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
-    if [ command -v tmux ]; then
-        # TODO is this working?
+    if [ -z "$(command -v tmux)" ]; then
         sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
     else
         echo 'Seems TMUX is not installed, you may want to install that and resource bashrc followed by pressing prefix + I (should be backslash plus capital I) to install tmux plugins'
     fi
+    source ~/.bashrc
 }
 
 function install () {
@@ -76,6 +76,7 @@ function install () {
     fi
     rustup default stable
     # TODO check (g)cc installed for rust linker
+    # TODO install homebrew?
 
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     create_symlinks

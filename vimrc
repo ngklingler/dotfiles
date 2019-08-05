@@ -17,6 +17,7 @@ set fileignorecase  " turn off case sensitive completions for file and dir compl
 set wildmode=longest,list,full  " Bash like file completions in ex command
 set wildmenu  " Disable cycle menu in ex file completions
 set clipboard+=unnamedplus  " Use the + register on copy (the system clipboard)
+set confirm  " Confirm whether to save when quitting with unsaved changes
 
 " Things that are specific to nvim vs vim
 if has("nvim")
