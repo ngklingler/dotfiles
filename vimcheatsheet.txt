@@ -46,6 +46,7 @@ yank and put:
     y to yank selection from visual mode, or yMOTION
     yy to yank entire line
     p to put yank or last deletion after/below, P above/before
+    check the + and * registers for copying to sys clipboard (set in my vimrc)
 
 find and replace:
     / to search forward, ? to search backwards
