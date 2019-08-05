@@ -57,7 +57,6 @@ setup_environment () {
     curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
     source $HOME/.bashrc
     if [ -z "$(command -v tmux)" ]; then
-        # TODO is this working?
         sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
     else
         echo 'Seems TMUX is not installed, you may want to install that and resource bashrc followed by pressing prefix + I (should be backslash plus capital I) to install tmux plugins'
@@ -77,6 +76,7 @@ function install () {
     fi
     rustup default stable
     # TODO check (g)cc installed for rust linker
+    # TODO install homebrew?
 
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     create_symlinks
