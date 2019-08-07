@@ -3,7 +3,7 @@ function create_symlinks () {
     # TODO can we check if they are already symlinks to this location?
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$dir/old_dotfiles # backup originals in case something breaks
-    files="vimrc bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim"
+    files="vimrc bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim zshrc"
 
     [ -d "$backup_dir" ] && rm -rf $backup_dir
     # TODO make this programatic off list
