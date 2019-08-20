@@ -46,5 +46,3 @@ function gitdiff () {
 }
 
 cd () { builtin cd "$@" && ls; }
-
-echo $USER@$HOST  $(uname -srm)
