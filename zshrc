@@ -56,4 +56,4 @@ colors
 # enable substitution for prompt
 setopt prompt_subst
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
