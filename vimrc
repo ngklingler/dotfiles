@@ -61,6 +61,7 @@ call plug#begin()
     Plug 'junegunn/vim-easy-align'
     Plug 'scrooloose/nerdtree'
     Plug 'tmux-plugins/vim-tmux-focus-events'
+    Plug 'tpope/vim-commentary'
 call plug#end()
 
 " Plugin settings
