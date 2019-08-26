@@ -36,6 +36,7 @@ jumping:
     % to jump between matching (, [, {
     H to jump to top of screen, M to middle, L to bottom
     g; to go backwards in changelist, g, to go forward
+    mark text with mCHAR, jump to mark with `CHAR, begining of line with mark with 'CHAR
 
 undo and redo:
     u to undo last edit
@@ -62,6 +63,7 @@ find and replace:
     :#,#s/OLD/NEW/g where #,# are line nums to do substition in
     :%s/OLD/NEW/g to change every occurrence in file
     :%s/OLD/NEW/gc to do above with confirmation on each change
+    searches work as motions (i.e. d/foo to delete until foo)
 
 windows:
     C-w C-w to jump around windows, = in vimrc to do the same
