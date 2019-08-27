@@ -57,11 +57,11 @@ call plug#begin()
     Plug 'joshdick/onedark.vim'
     Plug 'mhinz/vim-signify'
     Plug 'python/black'
-    Plug 'vimwiki/vimwiki'
-    Plug 'junegunn/vim-easy-align'
     Plug 'scrooloose/nerdtree'
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'tpope/vim-commentary'
+    Plug 'godlygeek/tabular'
+    Plug 'plasticboy/vim-markdown'
 call plug#end()
 
 " Plugin settings
@@ -81,6 +81,7 @@ set completeopt-=preview  " Make it so completions don't open a preview window
 let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
 autocmd BufWritePre *.py silent! execute ':silent! Black'
+let g:vim_markdown_toc_autofit = 1
 
 " Key mappings
 " Set ` to cycle buffers
