@@ -45,3 +45,4 @@ function gitdiff () {
 }
 
 cd () { builtin cd "$@" && ls; }
+alias notes='vi ~/notes'
