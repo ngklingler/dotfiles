@@ -81,7 +81,6 @@ set completeopt-=preview  " Make it so completions don't open a preview window
 let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
 autocmd BufWritePre *.py silent! execute ':silent! Black'
-let g:vim_markdown_toc_autofit = 1
 autocmd BufRead ~/notes execute 'set filetype=markdown'
 
 " Key mappings
