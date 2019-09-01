@@ -39,29 +39,25 @@ function install_necessary_utils () {
     git clone https://github.com/ngklingler/utils.git $HOME/utils
     # TODO make above a gitmodule in the dotfiles folder
     utils='create_or_attach_tmux tmux_pane_status'
-    pushd $HOME/utils
-    # TODO implement version checking so we don't reinstall the same version
     for util in $utils; do
-        cargo install -f --path $HOME/utils/$util
+        command -v $util || cargo install -f --path $HOME/utils/$util &
     done
-    popd
-    utils='lsd ripgrep bat'
-    # TODO upgrade flag?
-    for util in $utils; do
-        cargo install -f $util
-    done
+    command -v lsd || cargo install lsd &
+    command -v rg || cargo install ripgrep &
+    wait
 }
 
 setup_environment () {
     # TODO version control or don't do if exists?
-    curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash &
+    # TODO zsh version of above
     source $HOME/.bashrc
     if [ -z "$(command -v tmux)" ]; then
         sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
     else
         echo 'Seems TMUX is not installed, you may want to install that and resource bashrc followed by pressing prefix + I (should be backslash plus capital I) to install tmux plugins'
     fi
-    source ~/.bashrc
+    source ~/dotfiles/shell_config.sh
 }
 
 function install () {
