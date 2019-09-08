@@ -17,10 +17,7 @@ fi
 #aliases
 alias df='df -h'           # Human-readable sizes
 alias free='free -m'       # Show sizes in MB
-alias ls!="$(which ls)"
-alias cd!="builtin cd"
 [ -z "$(command -v rg)" ] || alias todo='rg TODO'
-[ -s "$(command -v lsd)" ] || alias lst='lsd --tree'
 # use better version if available
 if ! [ -z "$(command -v nvim)" ]; then
     alias vi='nvim'
@@ -32,10 +29,12 @@ elif ! [ -z "$(command -v vim)" ]; then
     EDITOR=vim
     GIT_EDITOR=nvim
 fi
+if ! [ -z "$(command -v ipython)" ]; then
+    alias py=ipython
+elif ! [ -z "$(command -v python3)" ]; then
+    alias py=python3
+fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
-function gitdiff () {
-    vimdiff $1 <(git show $2:./$1)
-}
-
+gitdiff () { vimdiff $1 <(git show $2:./$1) }
 cd () { builtin cd "$@" && ls; }
 alias notes='vi ~/notes'
