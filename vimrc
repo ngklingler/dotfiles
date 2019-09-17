@@ -55,19 +55,16 @@ call plug#begin()
         \ }
     Plug 'sheerun/vim-polyglot'
     Plug 'joshdick/onedark.vim'
-    Plug 'mhinz/vim-signify'
     Plug 'python/black'
     Plug 'scrooloose/nerdtree'
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'tpope/vim-commentary'
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
+    Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " Plugin settings
-let g:signify_vcs_list = ['git']
-let g:signify_realtime = 1
-set signcolumn=yes  " Keep sign column open even if no git changes
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232  " Pitch black background
@@ -82,6 +79,8 @@ let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
 autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
+autocmd FileType SQL
+    \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 " Key mappings
 " Set ` to cycle buffers
