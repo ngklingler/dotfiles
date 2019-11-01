@@ -62,6 +62,7 @@ call plug#begin()
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
     Plug 'tpope/vim-fugitive'
+    Plug 'itchyny/lightline.vim'
 call plug#end()
 
 " Plugin settings
