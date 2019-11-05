@@ -18,6 +18,7 @@ set wildmode=longest,list,full  " Bash like file completions in ex command
 set wildmenu  " Disable cycle menu in ex file completions
 set clipboard+=unnamedplus  " Use the + register on copy (the system clipboard)
 set confirm  " Confirm whether to save when quitting with unsaved changes
+set noshowmode
 
 " Things that are specific to nvim vs vim
 if has("nvim")
@@ -100,6 +101,8 @@ imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " C-n Toggles NERDTree
 map <C-n> :NERDTreeToggle<CR>
+" gd goes to definition using LanguageClient and center definition
+nmap <silent> gd :call LanguageClient#textDocument_definition()<CR>zz
 " autoclose (),{},[]
 imap ( ()<left>
 imap [ []<left>
