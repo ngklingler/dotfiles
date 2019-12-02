@@ -83,6 +83,9 @@ let g:black_linelength = 79
 autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
 
+hi ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
 " Key mappings
 " Set ` to cycle buffers
 nmap - :bn<CR>
