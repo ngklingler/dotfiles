@@ -22,19 +22,24 @@ alias free='free -m'       # Show sizes in MB
 if ! [ -z "$(command -v nvim)" ]; then
     alias vi='nvim'
     EDITOR=nvim
-    GIT_EDITOR=vim
+    GIT_EDITOR=nvim
     alias vimdiff='nvim -d'
 elif ! [ -z "$(command -v vim)" ]; then
     alias vi='vim'
     EDITOR=vim
-    GIT_EDITOR=nvim
+    GIT_EDITOR=vim
 fi
 if ! [ -z "$(command -v ipython)" ]; then
+    # TODO ipython --TerminalInteractiveShell.editing_mode=vi makes ipy use vi mode
     alias py=ipython
 elif ! [ -z "$(command -v python3)" ]; then
     alias py=python3
 fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
-gitdiff () { vimdiff $1 <(git show $2:./$1) }
-cd () { builtin cd "$@" && ls; }
+gitdiff () {
+    vimdiff $1 <(git show $2:./$1)
+}
+cd () {
+    builtin cd "$@" && ls;
+}
 alias notes='vi ~/notes'

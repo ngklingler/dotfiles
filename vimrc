@@ -18,6 +18,7 @@ set wildmode=longest,list,full  " Bash like file completions in ex command
 set wildmenu  " Disable cycle menu in ex file completions
 set clipboard+=unnamedplus  " Use the + register on copy (the system clipboard)
 set confirm  " Confirm whether to save when quitting with unsaved changes
+set noshowmode
 
 " Things that are specific to nvim vs vim
 if has("nvim")
@@ -55,19 +56,17 @@ call plug#begin()
         \ }
     Plug 'sheerun/vim-polyglot'
     Plug 'joshdick/onedark.vim'
-    Plug 'mhinz/vim-signify'
     Plug 'python/black'
     Plug 'scrooloose/nerdtree'
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'tpope/vim-commentary'
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
+    Plug 'tpope/vim-fugitive'
+    Plug 'itchyny/lightline.vim'
 call plug#end()
 
 " Plugin settings
-let g:signify_vcs_list = ['git']
-let g:signify_realtime = 1
-set signcolumn=yes  " Keep sign column open even if no git changes
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232  " Pitch black background
@@ -82,6 +81,8 @@ let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
 autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
+autocmd FileType SQL
+    \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 hi ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -103,6 +104,8 @@ imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " C-n Toggles NERDTree
 map <C-n> :NERDTreeToggle<CR>
+" gd goes to definition using LanguageClient and center definition
+nmap <silent> gd :call LanguageClient#textDocument_definition()<CR>zz
 " autoclose (),{},[]
 imap ( ()<left>
 imap [ []<left>
