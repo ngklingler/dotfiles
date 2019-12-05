@@ -84,6 +84,9 @@ autocmd BufRead ~/notes execute 'set filetype=markdown'
 autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
+hi ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
 " Key mappings
 " Set ` to cycle buffers
 nmap - :bn<CR>
