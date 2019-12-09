@@ -44,8 +44,8 @@ cd () {
 }
 alias notes='vi ~/notes'
 
-n ()
-{
+# nnn config
+n () {
     # Block nesting of nnn in subshells
     if [ "${NNNLVL:-0}" -ge 1 ]; then
         echo "nnn is already running"
@@ -68,4 +68,15 @@ n ()
             . "$NNN_TMPFILE"
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
+}
+export NNN_USE_EDITOR=1
+
+tmuxex () {
+    session=$(tmux display-message -p '#S')
+    for dir in *; do
+        if [[ -d "$dir" ]]; then
+            tmux new-window -n $dir -c "$(pwd)/$dir"
+            tmux send-keys -t $session:$dir ls Enter
+        fi
+    done
 }
