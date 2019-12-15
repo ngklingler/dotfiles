@@ -32,7 +32,8 @@ function create_symlinks () {
 function install_tpm () {
     tpm_dir=$HOME/.tmux/plugins/tpm
     git_url='https://github.com/tmux-plugins/tpm'
-    [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
+    [ -d "$tpm_dir" && cd $tpm_dir && git pull && cd - ] || git clone $git_url $tpm_dir
+    sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
 }
 
 function install_necessary_utils () {
@@ -42,43 +43,56 @@ function install_necessary_utils () {
     for util in $utils; do
         command -v $util || cargo install -f --path $HOME/utils/$util &
     done
-    command -v lsd || cargo install lsd &
-    command -v rg || cargo install ripgrep &
     wait
 }
 
-setup_environment () {
-    # TODO version control or don't do if exists?
-    curl -o $HOME/dotfiles/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash &
-    # TODO zsh version of above
-    source $HOME/.bashrc
-    if [ -z "$(command -v tmux)" ]; then
-        sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
-    else
-        echo 'Seems TMUX is not installed, you may want to install that and resource bashrc followed by pressing prefix + I (should be backslash plus capital I) to install tmux plugins'
+function install_brew() {
+    if [ "$(uname)" == "Darwin" ]; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+        test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+        test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> $HOME/dotfiles/machine.sh
     fi
-    source ~/dotfiles/shell_config.sh
+}
+
+function install_dependencies () {
+    if [ -z "$(command -v pacman)" ]; then
+        read -p "Use pacman with sudo to install dependencies? [y/n]\n" -n 1 -r
+        if [[ $REPLY =~ ^[yY]$ ]]; then
+            sudo pacman -Syu
+            install='sudo pacman -S'
+            command -v pip3 || sudo pacman -S python-pip
+        fi
+    elif [ ! -z "$(command -v brew)" ]; then
+        echo 'Installing dependencies with brew...'
+        install='brew install'
+        command -v pip3 || brew install python3
+    else
+        install_brew
+        install='brew install'
+    fi
+    for prog in 'rustup git nvim gcc tmux ripgrep exa alacritty'; do
+        command -v $prog || $install prog &
+    done
+    wait
+    pip3 install --user pynvim
+    rustup default stable
+}
+
+function git_completion () {
+    echo 'Not yet implemented...'
 }
 
 function install () {
     # touch machine.sh if doesn't exist so bashrc source doesn't complain
     [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
-    # check if rust installed, if not install it
-    if [ -d "$HOME/.cargo/bin/" ]; then
-        command -v cargo || export PATH="$PATH:$HOME/.cargo/bin"
-    else
-        curl https://sh.rustup.rs -sSf | sh
-        export PATH="$PATH:$HOME/.cargo/bin"
-    fi
-    rustup default stable
-    # TODO check (g)cc installed for rust linker
-    # TODO install homebrew?
-
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
-    create_symlinks
-    install_tpm
+    install_dependencies
+    create_symlinks &
+    install_tpm &
     install_necessary_utils
-    setup_environment
 }
 
 install

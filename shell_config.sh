@@ -36,9 +36,6 @@ elif ! [ -z "$(command -v python3)" ]; then
     alias py=python3
 fi
 [ -z "$(command -v lsd)" ] || alias ls='lsd'
-gitdiff () {
-    vimdiff $1 <(git show $2:./$1)
-}
 cd () {
     builtin cd "$@" && ls;
 }
