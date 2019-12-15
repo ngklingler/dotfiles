@@ -1,6 +1,5 @@
 #!/bin/bash
 function create_symlinks () {
-    # TODO can we check if they are already symlinks to this location?
     dir=$HOME/dotfiles # directory of the git repo containing this file
     backup_dir=$dir/old_dotfiles # backup originals in case something breaks
     files="vimrc bashrc tmux.conf config/alacritty/alacritty.yml config/nvim/init.vim zshrc"
@@ -58,7 +57,7 @@ function install_brew() {
 }
 
 function install_dependencies () {
-    if [ -z "$(command -v pacman)" ]; then
+    if [ ! -z "$(command -v pacman)" ]; then
         read -p "Use pacman with sudo to install dependencies? [y/n]\n" -n 1 -r
         if [[ $REPLY =~ ^[yY]$ ]]; then
             sudo pacman -Syu
@@ -74,7 +73,7 @@ function install_dependencies () {
         install='brew install'
     fi
     for prog in 'rustup git nvim gcc tmux ripgrep exa alacritty'; do
-        command -v $prog || $install prog &
+        command -v $prog || $install prog
     done
     wait
     pip3 install --user pynvim
