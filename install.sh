@@ -37,7 +37,7 @@ function install_tpm () {
     else
         git clone https://github.com/tmux-plugins/tpm $tpm_dir
     fi
-    sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
+    sh $HOME/.tmux/plugins/tpm/bindings/install_plugins > /dev/null
 }
 
 function install_necessary_utils () {
@@ -66,7 +66,7 @@ function install_dependencies () {
         read -p "Use pacman with sudo to install dependencies? [y/n]" -n 1 -r
         echo
         if [[ $REPLY =~ ^[yY]$ ]]; then
-            sudo pacman -Syu --noconfirm
+            sudo pacman -Sy --noconfirm
             install='sudo pacman -S --noconfirm'
             command -v pip3 || sudo pacman -S python-pip
         fi
@@ -77,10 +77,12 @@ function install_dependencies () {
         install='brew install'
         command -v pip3 || brew install python3
     fi
-    for prog in 'rustup git nvim gcc tmux ripgrep exa alacritty'; do
-        command -v $prog || $install prog
+    progs="rustup git neovim gcc tmux ripgrep exa alacritty"
+    for prog in $progs; do
+        command -v $prog || eval $install $prog
     done
     wait
+    command -v rustup || rustup-init -y
     pip3 install --user pynvim
     rustup default stable
 }
