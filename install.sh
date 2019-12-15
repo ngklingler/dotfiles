@@ -30,8 +30,13 @@ function create_symlinks () {
 
 function install_tpm () {
     tpm_dir=$HOME/.tmux/plugins/tpm
-    git_url='https://github.com/tmux-plugins/tpm'
-    [ -d "$tpm_dir" && cd $tpm_dir && git pull && cd - ] || git clone $git_url $tpm_dir
+    if [ -d $tpm_dir ]; then
+        pushdir $tpm_dir
+        git pull
+        popdir
+    else
+        git clone https://github.com/tmux-plugins/tpm $tpm_dir
+    fi
     sh $HOME/.tmux/plugins/tpm/bindings/install_plugins
 }
 
@@ -58,19 +63,19 @@ function install_brew() {
 
 function install_dependencies () {
     if [ ! -z "$(command -v pacman)" ]; then
-        read -p "Use pacman with sudo to install dependencies? [y/n]\n" -n 1 -r
+        read -p "Use pacman with sudo to install dependencies? [y/n]" -n 1 -r
+        echo
         if [[ $REPLY =~ ^[yY]$ ]]; then
-            sudo pacman -Syu
-            install='sudo pacman -S'
+            sudo pacman -Syu --noconfirm
+            install='sudo pacman -S --noconfirm'
             command -v pip3 || sudo pacman -S python-pip
         fi
-    elif [ ! -z "$(command -v brew)" ]; then
-        echo 'Installing dependencies with brew...'
+    fi
+    if [ -z $install ]; then
+        echo "Installing brew if it doesn't exist, then installing dependencies with brew"
+        command -v brew || install_brew
         install='brew install'
         command -v pip3 || brew install python3
-    else
-        install_brew
-        install='brew install'
     fi
     for prog in 'rustup git nvim gcc tmux ripgrep exa alacritty'; do
         command -v $prog || $install prog
@@ -92,6 +97,7 @@ function install () {
     create_symlinks &
     install_tpm &
     install_necessary_utils
+    git_completion
 }
 
 install
