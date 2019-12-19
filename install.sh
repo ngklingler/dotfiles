@@ -62,6 +62,7 @@ function install_brew() {
 }
 
 function install_dependencies () {
+    # TODO make certain programs optional, provide option to supply custom instal string
     if [ ! -z "$(command -v pacman)" ]; then
         read -p "Use pacman with sudo to install dependencies? [y/n]" -n 1 -r
         echo
@@ -77,7 +78,7 @@ function install_dependencies () {
         install='brew install'
         command -v pip3 || brew install python3
     fi
-    progs="rustup git neovim gcc tmux ripgrep exa alacritty"
+    progs="rustup git neovim gcc tmux ripgrep exa"
     for prog in $progs; do
         command -v $prog || eval $install $prog
     done
@@ -96,6 +97,7 @@ function install () {
     [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     install_dependencies
+    command -v cargo || export PATH="$PATH:$HOME/.cargo/bin"
     create_symlinks &
     install_tpm &
     install_necessary_utils
