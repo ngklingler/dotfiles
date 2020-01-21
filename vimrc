@@ -61,7 +61,6 @@ call plug#begin()
     Plug 'tmux-plugins/vim-tmux-focus-events'
     Plug 'tpope/vim-commentary'
     Plug 'godlygeek/tabular'
-    Plug 'plasticboy/vim-markdown'
     Plug 'tpope/vim-fugitive'
     Plug 'itchyny/lightline.vim'
 call plug#end()
@@ -76,6 +75,7 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['~/.local/bin/pyls']
     \ }
 let g:LanguageClient_useVirtualText = 0  " Make it so error messages are not shown inline on screen
+let g:LanguageClient_diagnosticsList = "Location"
 set completeopt-=preview  " Make it so completions don't open a preview window
 let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
@@ -84,8 +84,6 @@ autocmd BufRead ~/notes execute 'set filetype=markdown'
 autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
-hi ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
 
 " Key mappings
 " Set ` to cycle buffers
@@ -124,6 +122,8 @@ function! CloseQuote(char)
 endfunction
 imap ' <c-r>=CloseQuote("'")<CR>
 imap " <c-r>=CloseQuote('"')<CR>
+
+
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
