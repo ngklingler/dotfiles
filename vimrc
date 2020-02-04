@@ -5,7 +5,8 @@ set tabstop=4 shiftwidth=4 expandtab  " Tabs are 4 spaces
 set colorcolumn=80  " have a highlighted column for PEP8
 set nowrap  " Don't wrap long lines
 set showmatch " highlight matching (, [, {
-set number  " show line numbers
+set relativenumber  " show line numbers
+set number
 set noswapfile  " Disable swap files
 set mouse=a  " use mouse for selection, scrolling, eta
 set hidden  " allow hidden buffers
@@ -16,7 +17,7 @@ set fileformat=unix  " newline line endings
 set fileignorecase  " turn off case sensitive completions for file and dir completions
 set wildmode=longest,list,full  " Bash like file completions in ex command
 set wildmenu  " Disable cycle menu in ex file completions
-set clipboard+=unnamedplus  " Use the + register on copy (the system clipboard)
+set clipboard=unnamedplus  " Use the + register on copy (the system clipboard)
 set confirm  " Confirm whether to save when quitting with unsaved changes
 set noshowmode
 
@@ -79,13 +80,19 @@ let g:LanguageClient_diagnosticsList = "Location"
 set completeopt-=preview  " Make it so completions don't open a preview window
 let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
-autocmd BufWritePre *.py silent! execute ':silent! Black'
+" autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
 autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
 " Key mappings
+nmap <c-h> <c-w>h
+nmap <c-j> <c-w>j
+nmap <c-k> <c-w>k
+nmap <c-l> <c-w>l
+" Make ESC work in terminal mode
+tmap <esc> <c-\><c-n>
 " Set ` to cycle buffers
 nmap - :bn<CR>
 " Set = to cycle windows in normal mode
