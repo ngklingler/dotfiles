@@ -64,6 +64,7 @@ call plug#begin()
     Plug 'godlygeek/tabular'
     Plug 'tpope/vim-fugitive'
     Plug 'itchyny/lightline.vim'
+    Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 " Plugin settings
@@ -86,11 +87,6 @@ autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
-" Key mappings
-nmap <c-h> <c-w>h
-nmap <c-j> <c-w>j
-nmap <c-k> <c-w>k
-nmap <c-l> <c-w>l
 " Make ESC work in terminal mode
 tmap <esc> <c-\><c-n>
 " Set ` to cycle buffers
