@@ -65,9 +65,16 @@ call plug#begin()
     Plug 'tpope/vim-fugitive'
     Plug 'itchyny/lightline.vim'
     Plug 'christoomey/vim-tmux-navigator'
+    Plug 'metakirby5/codi.vim'
 call plug#end()
 
 " Plugin settings
+let g:codi#interpreters = {
+    \ 'python': {
+    \ 'bin': 'python3',
+    \ },
+\ }
+let g:codi#autocmd = 'InsertLeave'
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232  " Pitch black background
