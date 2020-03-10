@@ -100,3 +100,6 @@ macros:
     start entering any commands you wish (other than q)
     press q to finish recording the macro
     play the macro by hitting @ plus the register you specified, @@ replays last macro
+
+misc:
+    visually select numbers and do g<c-a> to order them, g<c-x> to decrement them

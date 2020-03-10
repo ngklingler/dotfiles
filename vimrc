@@ -66,9 +66,22 @@ call plug#begin()
     Plug 'itchyny/lightline.vim'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'metakirby5/codi.vim'
+    Plug 'brettanomyces/nvim-editcommand'
 call plug#end()
 
 " Plugin settings
+let g:editcommand_prompt = '$'
+let g:editcommand_no_mappings = 1
+tmap <c-x> <Plug>EditCommand
+let g:lightline = {
+    \ 'active': {
+    \ 'left' : [ ['mode', 'readonly', 'filename', 'modified', 'charvaluehex']],
+    \ 'right': [['lineinfo', 'percent', 'fileformat', 'fileencoding', 'filetype', 'gitbranch']],
+    \ },
+    \ 'component': {'charvaluehex': '0x%B'},
+    \ 'component_function': {'gitbranch': 'FugitiveHead'},
+\ }
+
 let g:codi#interpreters = {
     \ 'python': {
     \ 'bin': 'python3',
@@ -94,6 +107,8 @@ autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
+" paste in command line mode
+cmap <c-p> <c-r>"
 " Make ESC work in terminal mode
 tmap <esc> <c-\><c-n>
 " Set ` to cycle buffers
