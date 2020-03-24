@@ -107,6 +107,9 @@ autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
+" turn off middle click paste
+map <MiddleMouse> <Nop>
+imap <MiddleMouse> <Nop>
 " paste in command line mode
 cmap <c-p> <c-r>"
 " Make ESC work in terminal mode
