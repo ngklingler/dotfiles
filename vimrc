@@ -47,7 +47,7 @@ call plug#begin()
         Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
-    " TODO deoplete dependency: `pip[3] install --user --upgrade pynvim
+    " TODO deoplete dependency: `pip[3] install --user --upgrade pynvim`
     let g:deoplete#enable_at_startup = 1
 
     " TODO this depends on rust and rustup default stable
@@ -67,6 +67,7 @@ call plug#begin()
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'metakirby5/codi.vim'
     Plug 'brettanomyces/nvim-editcommand'
+    Plug 'kassio/neoterm'
 call plug#end()
 
 " Plugin settings
@@ -107,6 +108,8 @@ autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
+" try to change vim dir to term dir
+nmap <leader>c i<c-u>pwd<cr><esc>kyy:cd <c-r>"<cr>i
 " paste in command line mode
 cmap <c-p> <c-r>"
 " Make ESC work in terminal mode
