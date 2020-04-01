@@ -110,6 +110,9 @@ autocmd FileType SQL
 
 " try to change vim dir to term dir
 nmap <leader>c i<c-u>pwd<cr><esc>kyy:cd <c-r>"<cr>i
+" turn off middle click paste
+map <MiddleMouse> <Nop>
+imap <MiddleMouse> <Nop>
 " paste in command line mode
 cmap <c-p> <c-r>"
 " Make ESC work in terminal mode
