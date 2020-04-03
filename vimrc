@@ -67,7 +67,6 @@ call plug#begin()
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'metakirby5/codi.vim'
     Plug 'brettanomyces/nvim-editcommand'
-    Plug 'kassio/neoterm'
 call plug#end()
 
 " Plugin settings
@@ -108,8 +107,10 @@ autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
+" paste in command mode
+cmap <c-p> <c-r>"
 " try to change vim dir to term dir
-nmap <leader>c i<c-u>pwd<cr><esc>kyy:cd <c-r>"<cr>i
+nmap <leader>c i<c-u>pwd<cr><esc>Gi<esc>kyy:cd <c-r>"<cr>i
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
