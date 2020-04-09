@@ -1,73 +1,78 @@
-set encoding=utf-8
-set list listchars=tab:!·,extends:$,precedes:$,space:·  " Characters to indicate whitespace
-set splitbelow splitright  " More sensible window splits
-set tabstop=4 shiftwidth=4 expandtab  " Tabs are 4 spaces
-set colorcolumn=80  " have a highlighted column for PEP8
-set nowrap  " Don't wrap long lines
-set showmatch " highlight matching (, [, {
-set relativenumber  " show line numbers
-set number
-set noswapfile  " Disable swap files
-set mouse=a  " use mouse for selection, scrolling, eta
-set hidden  " allow hidden buffers
-set hls ic is smartcase  " Highlight search results, ignore case on searches, search as you type
-set foldmethod=indent  " Fold lines on same indent
-set foldlevel=99  " Open all folds
-set fileformat=unix  " newline line endings
-set fileignorecase  " turn off case sensitive completions for file and dir completions
-set wildmode=longest,list,full  " Bash like file completions in ex command
-set wildmenu  " Disable cycle menu in ex file completions
-set clipboard=unnamedplus  " Use the + register on copy (the system clipboard)
-set confirm  " Confirm whether to save when quitting with unsaved changes
-set noshowmode
+" Simple settings
+    set encoding=utf-8
+    set list listchars=tab:!·,extends:$,precedes:$,space:·  " Characters to indicate whitespace
+    set splitbelow splitright  " More sensible window splits
+    set tabstop=4 shiftwidth=4 expandtab  " Tabs are 4 spaces
+    set colorcolumn=80  " have a highlighted column for PEP8
+    set nowrap  " Don't wrap long lines
+    set showmatch " highlight matching (, [, {
+    set relativenumber number " show line numbers
+    set noswapfile  " Disable swap files
+    set mouse=a  " use mouse for selection, scrolling, eta
+    set hidden  " allow hidden buffers
+    set hls ic is smartcase  " Highlight search results, ignore case on searches, search as you type
+    set foldmethod=indent  " Fold lines on same indent
+    set foldlevel=99  " Open all folds
+    set fileformat=unix  " newline line endings
+    set fileignorecase  " turn off case sensitive completions for file and dir completions
+    set wildmode=longest,list,full  " Bash like file completions in ex command
+    set wildmenu  " Disable cycle menu in ex file completions
+    set clipboard+=unnamedplus,unnamed  " Use the + register on copy (the system clipboard)
+    set confirm  " Confirm whether to save when quitting with unsaved changes
+    set noshowmode  " Don't show mode in command line when switching modes
+    set laststatus=2  " Always show statusline
+    set switchbuf=useopen  " Switch to window with buffer if one exists
 
 " Things that are specific to nvim vs vim
-if has("nvim")
-    set guicursor=  " So cursor is visible (block) in insert mode
-else
-    " Things that nvim has by default
-    set autoindent  " Match indentation of above line
-    filetype plugin indent on
-    set autoread  " Read in outside changes to file
-endif
-
-
-" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin()
-    if has('nvim')
-        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    if has("nvim")
+        set guicursor=  " So cursor is visible (block) in insert mode
+        set runtimepath^=~/.vim runtimepath+=~/.vim/after
+        let &packpath = &runtimepath
     else
-        Plug 'Shougo/deoplete.nvim'
-        Plug 'roxma/nvim-yarp'
-        Plug 'roxma/vim-hug-neovim-rpc'
+        " Things that nvim has by default
+        set autoindent  " Match indentation of above line
+        filetype plugin indent on
+        set autoread  " Read in outside changes to file
     endif
-    " TODO deoplete dependency: `pip[3] install --user --upgrade pynvim`
-    let g:deoplete#enable_at_startup = 1
 
-    " TODO this depends on rust and rustup default stable
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'bash install.sh',
-        \ }
-    Plug 'sheerun/vim-polyglot'
-    Plug 'joshdick/onedark.vim'
-    Plug 'python/black'
-    Plug 'scrooloose/nerdtree'
-    Plug 'tmux-plugins/vim-tmux-focus-events'
-    Plug 'tpope/vim-commentary'
-    Plug 'godlygeek/tabular'
-    Plug 'tpope/vim-fugitive'
-    Plug 'itchyny/lightline.vim'
-    Plug 'christoomey/vim-tmux-navigator'
-    Plug 'metakirby5/codi.vim'
-    Plug 'brettanomyces/nvim-editcommand'
-call plug#end()
+
+" Plugins
+    " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+
+    call plug#begin()
+        if has('nvim')
+            Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+        else
+            Plug 'Shougo/deoplete.nvim'
+            Plug 'roxma/nvim-yarp'
+            Plug 'roxma/vim-hug-neovim-rpc'
+        endif
+        " TODO deoplete dependency: `pip[3] install --user --upgrade pynvim`
+        let g:deoplete#enable_at_startup = 1
+
+        " TODO this depends on rust and rustup default stable
+        Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }
+        Plug 'sheerun/vim-polyglot'
+        Plug 'joshdick/onedark.vim'
+        Plug 'python/black'
+        Plug 'scrooloose/nerdtree'
+        Plug 'tmux-plugins/vim-tmux-focus-events'
+        Plug 'tpope/vim-commentary'
+        Plug 'godlygeek/tabular'
+        Plug 'tpope/vim-fugitive'
+        Plug 'itchyny/lightline.vim'
+        Plug 'christoomey/vim-tmux-navigator'
+        Plug 'metakirby5/codi.vim'
+        Plug 'brettanomyces/nvim-editcommand'
+    call plug#end()
 
 " Plugin settings
 let g:editcommand_prompt = '$'
@@ -75,10 +80,10 @@ let g:editcommand_no_mappings = 1
 tmap <c-x> <Plug>EditCommand
 let g:lightline = {
     \ 'active': {
-    \ 'left' : [ ['mode', 'readonly', 'filename', 'modified', 'charvaluehex']],
-    \ 'right': [['lineinfo', 'percent', 'fileformat', 'fileencoding', 'filetype', 'gitbranch']],
+    \ 'left' : [['mode', 'filename', 'modified']],
+    \ 'right': [['lineinfo', 'percent', 'filetype', 'gitbranch']],
     \ },
-    \ 'component': {'charvaluehex': '0x%B'},
+    \ 'component': {'charvaluehex': '0x%B', 'filename': '%f'},
     \ 'component_function': {'gitbranch': 'FugitiveHead'},
 \ }
 
@@ -103,14 +108,15 @@ let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
 " autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
+autocmd BufRead ~/.xonshrc execute 'set filetype=python'
 autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
+" change vim cwd to file wd
+command CD execute ":cd %:p:h"
 " paste in command mode
 cmap <c-p> <c-r>"
-" try to change vim dir to term dir
-nmap <leader>c i<c-u>pwd<cr><esc>Gi<esc>kyy:cd <c-r>"<cr>i
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
@@ -154,7 +160,6 @@ function! CloseQuote(char)
 endfunction
 imap ' <c-r>=CloseQuote("'")<CR>
 imap " <c-r>=CloseQuote('"')<CR>
-
 
 
 packloadall  " Load all packages now
