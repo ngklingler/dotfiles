@@ -50,7 +50,7 @@ aliases.update({
     # 'ls': 'lsd', # deprecated or programatic?
     'notes': 'vi ~/notes', # used or deprecated?
 })
-$EDITOR=aliases['vi']
+$EDITOR=aliases['vi'][0]
 $VISUAL=$EDITOR
 $GIT_EDITOR=$EDITOR
 $MYVIMRC=f'{$HOME}/.vimrc'
