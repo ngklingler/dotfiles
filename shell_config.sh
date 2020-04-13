@@ -4,16 +4,6 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
 [ -z "$PS1" ] && return # return if not interactive
 
-if [ -z "$(command -v tmux)" ]; then
-    # TODO too many spaces when not a git repo, fix in utils source
-    export PS1='$(tmux_pane_status $(pwd) $(echo $HOME) 2> /dev/null) > '
-else
-    [ -z "${TMUX}" ] && $(create_or_attach_tmux)
-    PROMPT_COMMAND='tmux set pane-border-format " #(tmux_pane_status #{pane_current_path} $HOME)"'
-    function precmd() { eval "$PROMPT_COMMAND"; }  # for zsh
-    export PS1="> "
-fi
-
 #aliases
 alias df='df -h'           # Human-readable sizes
 alias free='free -m'       # Show sizes in MB
