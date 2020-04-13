@@ -35,7 +35,6 @@
         set autoread  " Read in outside changes to file
     endif
 
-
 " Plugins
     " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
     if empty(glob('~/.vim/autoload/plug.vim'))
@@ -43,7 +42,6 @@
             \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     endif
-
     call plug#begin()
         if has('nvim')
             Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -54,7 +52,6 @@
         endif
         " TODO deoplete dependency: `pip[3] install --user --upgrade pynvim`
         let g:deoplete#enable_at_startup = 1
-
         " TODO this depends on rust and rustup default stable
         Plug 'autozimu/LanguageClient-neovim', {
             \ 'branch': 'next',
@@ -101,6 +98,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'python': ['~/.local/bin/pyls']
     \ }
+
 let g:LanguageClient_useVirtualText = 0  " Make it so error messages are not shown inline on screen
 let g:LanguageClient_diagnosticsList = "Location"
 set completeopt-=preview  " Make it so completions don't open a preview window
@@ -112,9 +110,10 @@ autocmd BufRead ~/.xonshrc execute 'set filetype=python'
 autocmd FileType SQL
     \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
-
 " change vim cwd to file wd
 command CD execute ":cd %:p:h"
+" close all buffers except current
+command! BD execute ":%bd|e#|bd#"
 " paste in command mode
 cmap <c-p> <c-r>"
 " turn off middle click paste
@@ -160,7 +159,6 @@ function! CloseQuote(char)
 endfunction
 imap ' <c-r>=CloseQuote("'")<CR>
 imap " <c-r>=CloseQuote('"')<CR>
-
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs

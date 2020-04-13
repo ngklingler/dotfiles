@@ -1,4 +1,5 @@
 #!/bin/bash
+
 function create_symlinks () {
     # TODO can we check if they are already symlinks to this location?
     dir=$HOME/dotfiles # directory of the git repo containing this file
@@ -26,7 +27,6 @@ function create_symlinks () {
         cp -r $HOME/.vim $backup_dir/vim
         rm -rf $HOME/.vim
     fi
-
 }
 
 function install_tpm () {

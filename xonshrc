@@ -7,7 +7,6 @@ $SHELL = _sys.argv[0]
 $CASE_SENSITIVE_COMPLETIONS = False
 $PROMPT = '{env_name}{BOLD_GREEN} {short_cwd}{NO_COLOR} {BOLD_BLUE}{prompt_end}{NO_COLOR} '
 # $BOTTOM_TOOLBAR = '{BOLD_GREEN}{user}@{hostname} {cwd} {gitstatus} {current_job} {localtime}                                            '
-
 _path_add = [
     f'{$HOME}/.cargo/bin',
     f'{$HOME}/.local/bin',
@@ -50,7 +49,8 @@ aliases.update({
     # 'ls': 'lsd', # deprecated or programatic?
     'notes': 'vi ~/notes', # used or deprecated?
 })
-$EDITOR=aliases['vi'][0]
+# $EDITOR=aliases['vi'][0] # from local versus upstream?
+$EDITOR=_which_first(['nvim', 'vim', 'vi'])
 $VISUAL=$EDITOR
 $GIT_EDITOR=$EDITOR
 $MYVIMRC=f'{$HOME}/.vimrc'
