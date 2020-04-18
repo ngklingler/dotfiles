@@ -13,44 +13,33 @@ _path_add = [
 ] + $PATH
 $PATH = [j for i, j in enumerate(_path_add) if j not in _path_add[:i] and _os.path.exists(j)]
 
-_NVIM = None
-if 'NVIM_LISTEN_ADDRESS' in ${...}:
-    try:
-        from pynvim import attach as _pynvim_attach
-    except:
-        print('pynvim python module missing, attempting to install')
-        xpip install pynvim
-        from pynvim import attach as _pynvim_attach
-    _NVIM = _pynvim_attach('socket', path=$NVIM_LISTEN_ADDRESS)
-else:
-    $VI_MODE = True
-    if 'TMUX' not in ${...}:
-        with _os.popen("tmux ls -F '#{session_attached}#{session_name}' 2> /dev/null") as cmd:
-            sessions = cmd.read().splitlines()
-        for s in sessions:
-            if len(s) and s[0] == '0':
-                tmux a -t @(s[1])
-                break
-        else:
-            tmux
+if 'NVIM_LISTEN_ADDRESS' in ${...} and not _shutil.which('nvr'):
+    print('installing nvr')
+    xpip install neovim-remote
+
+if 'TMUX' not in ${...} and _shutil.which('tmux'):
+    with _os.popen("tmux ls -F '#{session_attached}#{session_name}' 2> /dev/null") as cmd:
+        sessions = cmd.read().splitlines()
+    for s in sessions:
+        if len(s) and s[0] == '0':
+            tmux a -t @(s[1])
+            break
+    else:
+        tmux
 
 _which_first = lambda x: list(filter(bool, map(_shutil.which, x)))[0]
-def _vi(args):
-    buffers = {buffer.name: buffer.number for buffer in _NVIM.buffers}
-    list(map(_NVIM.command, map(
-        lambda x: f':b {buffers[x]}' if x in buffers else f':e {x}',
-        reversed(list(map(lambda x: x.replace($HOME, '~'), args)))
-    )))
+vis = ['nvim', 'vim', 'vi']
+if 'NVIM_LISTEN_ADDRESS' in ${...}:
+    vis.insert(0, 'nvr')
 aliases.update({
     'df': 'df -h',
     'free': 'free -m',
-    'vi': _vi if _NVIM else _which_first(['nvim', 'vim', 'vi']),
+    'vi': _which_first(vis),
     'py': _which_first(['ipython', 'python3', 'python']),
     # 'ls': 'lsd', # deprecated or programatic?
     'notes': 'vi ~/notes', # used or deprecated?
 })
-# $EDITOR=aliases['vi'][0] # from local versus upstream?
-$EDITOR=_which_first(['nvim', 'vim', 'vi'])
+$EDITOR=_which_first(vis)
 $VISUAL=$EDITOR
 $GIT_EDITOR=$EDITOR
 $MYVIMRC=f'{$HOME}/.vimrc'
@@ -59,4 +48,5 @@ $MYVIMRC=f'{$HOME}/.vimrc'
 @events.on_chdir
 def _cd_events(olddir, newdir, **kw):
     ls
-    _NVIM and _NVIM.command(f':cd {newdir}')
+    'NVIM_LISTEN_ADDRESS' in ${...} and nvr --remote-send f'<esc>:cd {newdir}<cr>i'
+

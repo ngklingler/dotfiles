@@ -22,6 +22,7 @@
     set noshowmode  " Don't show mode in command line when switching modes
     set laststatus=2  " Always show statusline
     set switchbuf=useopen  " Switch to window with buffer if one exists
+    let $NVIM_LISTEN_ADDRESS=v:servername
 
 " Things that are specific to nvim vs vim
     if has("nvim")
