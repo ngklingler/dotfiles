@@ -54,6 +54,7 @@ $EDITOR=_which_first(['nvim', 'vim', 'vi'])
 $VISUAL=$EDITOR
 $GIT_EDITOR=$EDITOR
 $MYVIMRC=f'{$HOME}/.vimrc'
+# $EDITOR = aliases['vi'][0] if type(aliases['vi']) == list else aliases['vi']
 
 @events.on_chdir
 def _cd_events(olddir, newdir, **kw):
