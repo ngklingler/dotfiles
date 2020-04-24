@@ -68,7 +68,7 @@
         Plug 'tpope/vim-fugitive'
         Plug 'itchyny/lightline.vim'
         Plug 'christoomey/vim-tmux-navigator'
-        Plug 'metakirby5/codi.vim'
+        Plug 'jpalardy/vim-slime'
         Plug 'brettanomyces/nvim-editcommand'
     call plug#end()
 
@@ -85,12 +85,8 @@ let g:lightline = {
     \ 'component_function': {'gitbranch': 'FugitiveHead'},
 \ }
 
-let g:codi#interpreters = {
-    \ 'python': {
-    \ 'bin': 'python3',
-    \ },
-\ }
-let g:codi#autocmd = 'InsertLeave'
+let g:slime_target = "neovim"
+let g:slime_python_ipython = 1
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232  " Pitch black background
@@ -116,12 +112,14 @@ command! CD execute ":cd %:p:h"
 " close all buffers except current
 command! BD execute ":%bd|e#|bd#"
 " paste in command mode
-cmap <c-p> <c-r>"
+" cmap <c-p> <c-r>"
+" used to be ^, switching to below helped when pasting from x11 selection
+cmap <c-p> <c-r>+
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
-" paste in command line mode
-cmap <c-p> <c-r>"
+" paste in terminal mode
+tmap <c-p> <c-\><c-n>""pi
 " Make ESC work in terminal mode
 tmap <esc> <c-\><c-n>
 " Set ` to cycle buffers
