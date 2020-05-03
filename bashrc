@@ -5,3 +5,5 @@ source $HOME/dotfiles/git-completion.bash
 bind 'set completion-ignore-case on'
 bind 'set show-all-if-unmodified on'
 set -o vi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

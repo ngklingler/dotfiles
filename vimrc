@@ -70,6 +70,8 @@
         Plug 'christoomey/vim-tmux-navigator'
         Plug 'jpalardy/vim-slime'
         Plug 'brettanomyces/nvim-editcommand'
+        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        Plug 'junegunn/fzf.vim'
     call plug#end()
 
 " Plugin settings
