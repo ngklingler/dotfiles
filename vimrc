@@ -62,6 +62,7 @@
         Plug 'prabirshrestha/asyncomplete.vim'
         Plug 'prabirshrestha/asyncomplete-lsp.vim'
         Plug 'mattn/vim-lsp-settings'
+        Plug 'cohama/lexima.vim'
     call plug#end()
 
 
@@ -121,13 +122,6 @@ imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " C-n Toggles NERDTree
 map <C-n> :NERDTreeToggle<CR>
 nmap gd :LspDefinition<cr>
-" autoclose (),{},[]
-imap ( ()<left>
-imap [ []<left>
-imap { {}<left>
-imap (<CR> (<CR>)<ESC>O
-imap {<CR> {<CR>}<ESC>O
-imap [<CR> [<CR>]<ESC>O
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
