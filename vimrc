@@ -53,7 +53,6 @@
         Plug 'godlygeek/tabular'
         Plug 'tpope/vim-fugitive'
         Plug 'itchyny/lightline.vim'
-        Plug 'christoomey/vim-tmux-navigator'
         Plug 'jpalardy/vim-slime'
         Plug 'brettanomyces/nvim-editcommand'
         Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -129,17 +128,6 @@ imap { {}<left>
 imap (<CR> (<CR>)<ESC>O
 imap {<CR> {<CR>}<ESC>O
 imap [<CR> [<CR>]<ESC>O
-" Quotes require this special function, otherwise then get infinitely matched
-function! CloseQuote(char)
-    let char = a:char
-    if getline('.')[col('.') - 1] != char
-        return char . char . "\<left>"
-    else
-        return char
-    endif
-endfunction
-imap ' <c-r>=CloseQuote("'")<CR>
-imap " <c-r>=CloseQuote('"')<CR>
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
