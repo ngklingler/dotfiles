@@ -44,20 +44,6 @@
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     endif
     call plug#begin()
-        if has('nvim')
-            Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-        else
-            Plug 'Shougo/deoplete.nvim'
-            Plug 'roxma/nvim-yarp'
-            Plug 'roxma/vim-hug-neovim-rpc'
-        endif
-        " TODO deoplete dependency: `pip[3] install --user --upgrade pynvim`
-        let g:deoplete#enable_at_startup = 1
-        " TODO this depends on rust and rustup default stable
-        Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
         Plug 'sheerun/vim-polyglot'
         Plug 'joshdick/onedark.vim'
         Plug 'python/black'
@@ -72,7 +58,13 @@
         Plug 'brettanomyces/nvim-editcommand'
         Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         Plug 'junegunn/fzf.vim'
+        Plug 'prabirshrestha/async.vim'
+        Plug 'prabirshrestha/vim-lsp'
+        Plug 'prabirshrestha/asyncomplete.vim'
+        Plug 'prabirshrestha/asyncomplete-lsp.vim'
+        Plug 'mattn/vim-lsp-settings'
     call plug#end()
+
 
 " Plugin settings
 let g:editcommand_prompt = '$'
@@ -92,22 +84,11 @@ let g:slime_python_ipython = 1
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232  " Pitch black background
-" TODO Dependencies need to be installed
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['~/.local/bin/pyls']
-    \ }
-
-let g:LanguageClient_useVirtualText = 0  " Make it so error messages are not shown inline on screen
-let g:LanguageClient_diagnosticsList = "Location"
 set completeopt-=preview  " Make it so completions don't open a preview window
 let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
 " autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
-autocmd BufRead ~/.xonshrc execute 'set filetype=python'
-autocmd FileType SQL
-    \ call deoplete#custom#buffer_option('auto_complete', v:false)
 
 " change vim cwd to file wd
 command! CD execute ":cd %:p:h"
@@ -140,8 +121,7 @@ imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " C-n Toggles NERDTree
 map <C-n> :NERDTreeToggle<CR>
-" gd goes to definition using LanguageClient and center definition
-nmap <silent> gd :call LanguageClient#textDocument_definition()<CR>zz
+nmap gd :LspDefinition<cr>
 " autoclose (),{},[]
 imap ( ()<left>
 imap [ []<left>
