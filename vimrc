@@ -22,19 +22,12 @@
     set noshowmode  " Don't show mode in command line when switching modes
     set laststatus=2  " Always show statusline
     set switchbuf=useopen  " Switch to window with buffer if one exists
+    set termguicolors  " Better colors, works on most terminals
     let $NVIM_LISTEN_ADDRESS=v:servername
-
-" Things that are specific to nvim vs vim
-    if has("nvim")
-        set guicursor=  " So cursor is visible (block) in insert mode
-        set runtimepath^=~/.vim runtimepath+=~/.vim/after
-        let &packpath = &runtimepath
-    else
-        " Things that nvim has by default
-        set autoindent  " Match indentation of above line
-        filetype plugin indent on
-        set autoread  " Read in outside changes to file
-    endif
+    set runtimepath^=~/.vim runtimepath+=~/.vim/after
+    let &packpath = &runtimepath
+    set autoindent  " Match indentation of above line
+    set autoread  " Read in outside changes to file
 
 " Plugins
     " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
@@ -55,7 +48,7 @@
         Plug 'itchyny/lightline.vim'
         Plug 'jpalardy/vim-slime'
         Plug 'brettanomyces/nvim-editcommand'
-        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        Plug 'junegunn/fzf', { 'do': 'sh install --all' }
         Plug 'junegunn/fzf.vim'
         Plug 'prabirshrestha/async.vim'
         Plug 'prabirshrestha/vim-lsp'
@@ -63,10 +56,12 @@
         Plug 'prabirshrestha/asyncomplete-lsp.vim'
         Plug 'mattn/vim-lsp-settings'
         Plug 'cohama/lexima.vim'
+        Plug 'lambdalisue/suda.vim'
     call plug#end()
 
 
 " Plugin settings
+let g:fzf_buffers_jump = 1
 let g:editcommand_prompt = '$'
 let g:editcommand_no_mappings = 1
 tmap <c-x> <Plug>EditCommand
@@ -81,9 +76,10 @@ let g:lightline = {
 
 let g:slime_target = "neovim"
 let g:slime_python_ipython = 1
+let g:slime_no_mappings = 0
 let g:onedark_termcolors=256
 colorscheme onedark
-highlight Normal ctermbg=232  " Pitch black background
+highlight Normal ctermbg=232 guibg=Black " Pitch black background
 set completeopt-=preview  " Make it so completions don't open a preview window
 let g:black_skip_string_normalization = 1
 let g:black_linelength = 79
@@ -92,8 +88,6 @@ autocmd BufRead ~/notes execute 'set filetype=markdown'
 
 " change vim cwd to file wd
 command! CD execute ":cd %:p:h"
-" close all buffers except current
-command! BD execute ":%bd|e#|bd#"
 " paste in command mode
 " cmap <c-p> <c-r>"
 " used to be ^, switching to below helped when pasting from x11 selection
@@ -103,15 +97,11 @@ map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 " paste in terminal mode
 tmap <c-p> <c-\><c-n>""pi
-" Make ESC work in terminal mode
 tmap <esc> <c-\><c-n>
-" Set ` to cycle buffers
 nmap - :bn<CR>
-" Set = to cycle windows in normal mode
 nmap = <C-w><C-w>
 " Toggle folds with q in normal mode
 nmap <space> za
-" Make backspace work in normal mode
 nmap <BS> X
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
@@ -120,8 +110,20 @@ imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " Enter selects an autocompletion if in the autocompletion menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " C-n Toggles NERDTree
-map <C-n> :NERDTreeToggle<CR>
+nmap <C-n> :NERDTreeToggle<CR>
 nmap gd :LspDefinition<cr>
+nmap <leader>b :Buffers<cr>
+nmap <leader>c :History:<cr>
+nmap <leader>d :call fzf#run({'source': 'find ~ -type d', 'sink': 'cd'})<cr>
+nmap <leader>f :Files<cr>
+nmap <leader>h :Helptags<cr>
+nmap <leader>r :Rg<cr>
+nmap <leader>s :History/<cr>
+nmap <leader>t :term<cr>
+nmap <leader>x <Plug>SlimeParagraphSend
+xmap <leader>x <Plug>SlimeRegionSend
+nmap <leader>: :History:<cr>
+nmap <leader>/ :History/<cr>
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
