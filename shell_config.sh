@@ -35,7 +35,7 @@ cd () {
 }
 
 if ! [ -z "$(command -v fd)" ]; then
-    export FZF_DEFAULT_COMMAND="fd . $HOME"
+    export FZF_DEFAULT_COMMAND="fd ."
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 fi
