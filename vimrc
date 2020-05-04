@@ -114,7 +114,7 @@ nmap <C-n> :NERDTreeToggle<CR>
 nmap gd :LspDefinition<cr>
 nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
-nmap <leader>d :call fzf#run({'source': 'find ~ -type d', 'sink': 'cd'})<cr>
+nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
 nmap <leader>f :Files<cr>
 nmap <leader>h :Helptags<cr>
 nmap <leader>r :Rg<cr>
