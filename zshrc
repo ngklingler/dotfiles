@@ -1,6 +1,5 @@
 source $HOME/dotfiles/shell_config.sh
 
-bindkey -v
 
 ## Options section
 setopt correct           # Auto correct mistakes
@@ -49,6 +48,8 @@ bindkey '^[[1;5D' backward-word                                 #
 bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
+
+bindkey "ç" fzf-cd-widget
 
 # Theming section  
 autoload -U compinit colors zcalc
