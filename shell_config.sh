@@ -31,8 +31,9 @@ gitdiff () {
 }
 cd () {
     builtin cd "$@" && ls;
+    [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd ${@}<cr>i"
+    # TODO what if nvr doesn't exists, handle vim
 }
-alias notes='vi ~/notes'
 
 # nnn config
 n () {
@@ -60,13 +61,3 @@ n () {
     fi
 }
 export NNN_USE_EDITOR=1
-
-tmuxex () {
-    session=$(tmux display-message -p '#S')
-    for dir in *; do
-        if [[ -d "$dir" ]]; then
-            tmux new-window -n $dir -c "$(pwd)/$dir"
-            tmux send-keys -t $session:$dir ls Enter
-        fi
-    done
-}
