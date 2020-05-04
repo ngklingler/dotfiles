@@ -8,10 +8,12 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 alias df='df -h'           # Human-readable sizes
 alias free='free -m'       # Show sizes in MB
 # use better version if available
-if ! [ -z "$(command -v nvim)" ]; then
+if ! [ -z "$NVIM_LISTEN_ADRESS" ]; then
+    alias vi='nvr'
+    export EDITOR='nvr'
+elif ! [ -z "$(command -v nvim)" ]; then
     alias vi='nvim'
     export EDITOR=nvim
-    alias vimdiff='nvim -d'
 elif ! [ -z "$(command -v vim)" ]; then
     alias vi='vim'
     export EDITOR=vim
@@ -24,10 +26,7 @@ if ! [ -z "$(command -v ipython)" ]; then
 elif ! [ -z "$(command -v python3)" ]; then
     alias py=python3
 fi
-[ -z "$(command -v lsd)" ] || alias ls='lsd'
-gitdiff () {
-    vimdiff $1 <(git show $2:./$1)
-}
+
 cd () {
     builtin cd "$@" && ls;
     [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd ${@}<cr>i"
