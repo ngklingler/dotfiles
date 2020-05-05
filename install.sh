@@ -36,6 +36,7 @@ function install_tpm () {
 }
 
 function install () {
+    [ -z "$(command -v nvr)" ] && python3 -m pip install --user neovim-remote
     # touch machine.sh if doesn't exist so bashrc source doesn't complain
     [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
