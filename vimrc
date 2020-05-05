@@ -58,10 +58,12 @@
         Plug 'mattn/vim-lsp-settings'
         Plug 'cohama/lexima.vim'
         Plug 'lambdalisue/suda.vim'
+        Plug 'mhinz/vim-sayonara'
     call plug#end()
 
 
 " Plugin settings
+let g:sayonara_confirm_quit = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_diagnostics_echo_delay = 200
 let g:lsp_virtual_text_enabled = 0
@@ -112,6 +114,8 @@ nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
 nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
 nmap <leader>f :Files<cr>
+nmap <leader>k :Sayonara!<cr>
+nmap <leader>K :Sayonara<cr>
 nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
 nmap <leader>t :term<cr>
