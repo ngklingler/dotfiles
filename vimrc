@@ -4,7 +4,6 @@
     set splitbelow splitright  " More sensible window splits
     set tabstop=4 shiftwidth=4 expandtab  " Tabs are 4 spaces
     set colorcolumn=80  " have a highlighted column for PEP8
-    set nowrap  " Don't wrap long lines
     set showmatch " highlight matching (, [, {
     set relativenumber number " show line numbers
     set noswapfile  " Disable swap files
@@ -22,12 +21,13 @@
     set noshowmode  " Don't show mode in command line when switching modes
     set laststatus=2  " Always show statusline
     set switchbuf=useopen  " Switch to window with buffer if one exists
-    set termguicolors  " Better colors, works on most terminals
+    " set termguicolors  " Better colors, works on most terminals
     let $NVIM_LISTEN_ADDRESS=v:servername
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
     let &packpath = &runtimepath
     set autoindent  " Match indentation of above line
-    set autoread  " Read in outside changes to file
+    set autoread  " Re
+
 
 " Plugins
     " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
@@ -48,8 +48,9 @@
         Plug 'itchyny/lightline.vim'
         Plug 'jpalardy/vim-slime'
         Plug 'brettanomyces/nvim-editcommand'
-        Plug 'junegunn/fzf', { 'do': 'sh install --all' }
+        Plug 'junegunn/fzf', { 'do': 'bash install --all' }
         Plug 'junegunn/fzf.vim'
+        Plug 'junegunn/vim-peekaboo'
         Plug 'prabirshrestha/async.vim'
         Plug 'prabirshrestha/vim-lsp'
         Plug 'prabirshrestha/asyncomplete.vim'
@@ -61,10 +62,11 @@
 
 
 " Plugin settings
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_echo_delay = 200
+let g:lsp_virtual_text_enabled = 0
 let g:fzf_buffers_jump = 1
-let g:editcommand_prompt = '$'
-let g:editcommand_no_mappings = 1
-tmap <c-x> <Plug>EditCommand
+let g:editcommand_prompt = '%'
 let g:lightline = {
     \ 'active': {
     \ 'left' : [['mode', 'filename', 'modified']],
@@ -86,17 +88,11 @@ let g:black_linelength = 79
 " autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
 
-" change vim cwd to file wd
-command! CD execute ":cd %:p:h"
-" paste in command mode
-" cmap <c-p> <c-r>"
-" used to be ^, switching to below helped when pasting from x11 selection
-cmap <c-p> <c-r>+
+" Mappings
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 " paste in terminal mode
-tmap <c-p> <c-\><c-n>""pi
 tmap <esc> <c-\><c-n>
 nmap - :bn<CR>
 nmap = <C-w><C-w>
@@ -116,8 +112,7 @@ nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
 nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
 nmap <leader>f :Files<cr>
-nmap <leader>h :Helptags<cr>
-nmap <leader>r :Rg<cr>
+nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
 nmap <leader>t :term<cr>
 nmap <leader>x <Plug>SlimeParagraphSend
