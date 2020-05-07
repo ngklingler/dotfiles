@@ -63,10 +63,12 @@
 
 
 " Plugin settings
+let g:peekaboo_window = 'vert bo 40new'
 let g:sayonara_confirm_quit = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_diagnostics_echo_delay = 200
 let g:lsp_virtual_text_enabled = 0
+let g:lsp_highlights_enabled = 0
 let g:fzf_buffers_jump = 1
 let g:editcommand_prompt = '%'
 let g:lightline = {
