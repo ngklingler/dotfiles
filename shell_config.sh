@@ -7,19 +7,17 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 #aliases
 alias df='df -h'           # Human-readable sizes
 alias free='free -m'       # Show sizes in MB
-# use better version if available
-if ! [ -z "$NVIM_LISTEN_ADRESS" ]; then
-    alias vi='nvr'
-    export EDITOR='nvr'
-elif ! [ -z "$(command -v nvim)" ]; then
-    alias vi='nvim'
-    export EDITOR=nvim
-elif ! [ -z "$(command -v vim)" ]; then
-    alias vi='vim'
-    export EDITOR=vim
-fi
-export GIT_EDITOR="$EDITOR"
+vi () {
+    if [ "$NVIM_LISTEN_ADDRESS" ]; then nvr "$@";
+    elif [ "$(command -v nvim)" ]; then nvim "$@";
+    elif [ "$(command -v vim)" ]; then vim "$@";
+    else vi "$@";
+    fi
+}
+export EDITOR=vi
 export VISUAL="$EDITOR"
+export GIT_EDITOR="$EDITOR"
+[ "$NVIM_LISTEN_ADDRESS" ] && export GIT_EDITOR='nvr -cc split --remote-wait'
 if ! [ -z "$(command -v ipython)" ]; then
     # TODO ipython --TerminalInteractiveShell.editing_mode=vi makes ipy use vi mode
     alias py=ipython

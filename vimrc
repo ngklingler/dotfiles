@@ -118,7 +118,8 @@ nmap <leader>k :Sayonara!<cr>
 nmap <leader>K :Sayonara<cr>
 nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
-nmap <leader>t :term<cr>
+" TODO, make term open existing terminal if it's there
+nmap <leader>t :term<cr>i
 nmap <leader>x <Plug>SlimeParagraphSend
 xmap <leader>x <Plug>SlimeRegionSend
 nmap <leader>: :History:<cr>
