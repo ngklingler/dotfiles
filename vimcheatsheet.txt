@@ -103,3 +103,5 @@ macros:
 
 misc:
     visually select numbers and do g<c-a> to order them, g<c-x> to decrement them
+    :sort sorts a selection, :sort u sorts and dedupes
+    :reg to list registers and values

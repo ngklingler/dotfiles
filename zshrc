@@ -1,6 +1,5 @@
 source $HOME/dotfiles/shell_config.sh
 
-bindkey -v
 
 ## Options section
 setopt correct           # Auto correct mistakes
@@ -50,6 +49,8 @@ bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
 
+bindkey "ç" fzf-cd-widget
+
 # Theming section  
 autoload -U compinit colors zcalc
 compinit -d
@@ -59,3 +60,5 @@ colors
 setopt prompt_subst
 
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
