@@ -88,6 +88,8 @@ completion:
 
 visual mode stuff:
     v to enter visual mode
+    shift-v or V to enter visual line mode
+    ctrl-V or ^v to enter visual block mode
     select lines to manipulate
     d to delete, y to yank
     :norm executes normal mode commands, useful for commenting and indentation changes
