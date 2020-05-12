@@ -26,7 +26,7 @@
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
     let &packpath = &runtimepath
     set autoindent  " Match indentation of above line
-    set autoread  " Re
+    set autoread  " Read in outside changes
 
 
 " Plugins
@@ -92,6 +92,15 @@ let g:black_linelength = 79
 " autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
 
+function! Customtermopen()
+    py3 import re
+    py3 pid = re.compile(r'//(\d+):')
+    py3 buffers = {(b.number, re.search(pid, b.name).group(1)) for b in vim.buffers if b.name.startswith('term://')}
+    py3 buffers = sorted(buffers, key=lambda x: x[1], reverse=True)
+    py3 vim.command(f':b {buffers[0][0]}') if buffers else vim.command(':term')
+    py3 del buffers; del pid; del re
+endfunction
+
 " Mappings
 " turn off middle click paste
 map <MiddleMouse> <Nop>
@@ -115,15 +124,14 @@ nmap gd :LspDefinition<cr>
 nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
 nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
+nmap <leader>e :SlimeSend<cr>
+xmap <leader>e <Plug>SlimeRegionSend
 nmap <leader>f :Files<cr>
 nmap <leader>k :Sayonara!<cr>
 nmap <leader>K :Sayonara<cr>
 nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
-" TODO, make term open existing terminal if it's there
-nmap <leader>t :term<cr>i
-nmap <leader>x <Plug>SlimeParagraphSend
-xmap <leader>x <Plug>SlimeRegionSend
+nmap <leader>t :call Customtermopen()<cr>i
 nmap <leader>: :History:<cr>
 nmap <leader>/ :History/<cr>
 
