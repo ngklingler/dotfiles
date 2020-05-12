@@ -35,6 +35,19 @@ function install_tpm () {
     [ -d "$tpm_dir" ] || git clone $git_url $tpm_dir
 }
 
+function install_vim_plug () {
+    plug_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    dest="$HOME/.vim/autoload/plug.vim"
+    if [ -f $dest ]]; then
+        mkdir -p $HOME/.vim/autoload/
+        if [ "$(command -v curl)" ]; then
+            curl $plug_url -o $dest
+        elif [ "$(command -v wget)" ]; then
+            wget $plug_url -O $dest
+        fi
+    fi
+}
+
 function install () {
     [ -z "$(command -v nvr)" ] && python3 -m pip install --user neovim-remote
     # touch machine.sh if doesn't exist so bashrc source doesn't complain
@@ -42,6 +55,7 @@ function install () {
     echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
     create_symlinks
     install_tpm
+    install_vim_plug
 }
 
 install

@@ -94,6 +94,7 @@ autocmd BufRead ~/notes execute 'set filetype=markdown'
 
 
 " Mappings
+map <space> <leader>
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
@@ -102,7 +103,7 @@ tmap <esc> <c-\><c-n>
 nmap - :bn<CR>
 nmap = <C-w><C-w>
 " Toggle folds with q in normal mode
-nmap <space> za
+nmap <leader><space> za
 nmap <BS> X
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
