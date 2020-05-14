@@ -38,7 +38,7 @@ function install_tpm () {
 function install_vim_plug () {
     plug_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     dest="$HOME/.vim/autoload/plug.vim"
-    if [ -f $dest ]; then
+    if ! [ -f $dest ]; then
         mkdir -p $HOME/.vim/autoload/
         if [ "$(command -v curl)" ]; then
             curl $plug_url -o $dest
