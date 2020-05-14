@@ -39,7 +39,6 @@
     call plug#begin()
         Plug 'sheerun/vim-polyglot'
         Plug 'joshdick/onedark.vim'
-        Plug 'python/black'
         Plug 'scrooloose/nerdtree'
         Plug 'tmux-plugins/vim-tmux-focus-events'
         Plug 'tpope/vim-commentary'
@@ -87,13 +86,11 @@ let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232 guibg=Black " Pitch black background
 set completeopt-=preview  " Make it so completions don't open a preview window
-let g:black_skip_string_normalization = 1
-let g:black_linelength = 79
 " autocmd BufWritePre *.py silent! execute ':silent! Black'
 autocmd BufRead ~/notes execute 'set filetype=markdown'
 
 function! Customtermopen()
-    py3 import re
+    py3 import re; import vim
     py3 pid = re.compile(r'//(\d+):')
     py3 buffers = {(b.number, re.search(pid, b.name).group(1)) for b in vim.buffers if b.name.startswith('term://')}
     py3 buffers = sorted(buffers, key=lambda x: x[1], reverse=True)
@@ -133,6 +130,7 @@ nmap <leader>K :Sayonara<cr>
 nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
 nmap <leader>t :call Customtermopen()<cr>i
+nmap <leader>w :w<cr>
 nmap <leader>: :History:<cr>
 nmap <leader>/ :History/<cr>
 
