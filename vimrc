@@ -87,8 +87,6 @@ let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232 guibg=Black " Pitch black background
 set completeopt-=preview  " Make it so completions don't open a preview window
-" autocmd BufWritePre *.py silent! execute ':silent! Black'
-autocmd BufRead ~/notes execute 'set filetype=markdown'
 
 function! Customtermopen()
     py3 import re; import vim
