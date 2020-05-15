@@ -1,4 +1,5 @@
 " Simple settings
+    set modeline " File modelines
     set encoding=utf-8
     set list listchars=tab:!·,extends:$,precedes:$,space:·  " Characters to indicate whitespace
     set splitbelow splitright  " More sensible window splits
