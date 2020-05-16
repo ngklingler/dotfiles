@@ -1,15 +1,34 @@
 #!/bin/bash
+function chkmk () {
+    [ -d $1 ] || mkdir -p $(dirname $1)
+}
+
+function dload () {
+    chkmk $2
+    if [ "$(command -v curl)" ]; then
+        curl $1 -o $2
+    elif [ "$(command -v wget)" ]; then
+        wget $1 -O $2
+    elif [ "$(command -v python3)" ]; then
+        python3 << EOF
+import urllib.request as x
+with open('$2', 'wb') as f:
+    f.write(x.urlopen("$1").read())
+EOF
+    fi
+}
+
 function symlink () {
     dir=$HOME/dotfiles
     backup=$HOME/dotfiles/old_dotfiles
     case "$1" in
-        "shell_config") files="bashrc bash_profile zshrc";;
+        "shell_config.sh") files="bashrc bash_profile zshrc";;
         "vimrc") files="config/nvim/init.vim vimrc";;
         "config/alacritty/alacritty.yml") files="$1";;
     esac
 
     for file in $files; do
-        mkdir -p $backup/$file
+        chkmk "$backup/$file"
         if [ -f $HOME/.$file ] || [ -L $HOME/.$file ]; then
             cp -a $HOME/.$file $backup/$file
             rm $HOME/.$file
@@ -18,28 +37,16 @@ function symlink () {
     done
 }
 
-function install_vim_plug () {
-    plug_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    dest="$HOME/.vim/autoload/plug.vim"
-    if ! [ -f $dest ]; then
-        mkdir -p $HOME/.vim/autoload/
-        if [ "$(command -v curl)" ]; then
-            curl $plug_url -o $dest
-        elif [ "$(command -v wget)" ]; then
-            wget $plug_url -O $dest
-        fi
-    fi
-}
-
 function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
     [ -z "$(command -v nvr)" ] && python3 -m pip install --user neovim-remote
-    symlink "shell_config"
-    symlink "vimrc"
-    symlink "config/alacritty/alacritty.yml"
-    install_vim_plug
+    for f in "shell_config.sh vimrc config/alacritty/alacritty.yml"; do
+        symlink $f
+    done
+    dload 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' "$HOME/.vim/autoload/plug.vim"
     [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
+    source $HOME/dotfiles/shell_config.sh
 }
 
 install
