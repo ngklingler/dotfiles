@@ -26,6 +26,8 @@ if ! [ -z "$(command -v fd)" ]; then
     export FZF_DEFAULT_COMMAND="fd ."
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+    HISTSIZE=1000
+    HISTCONTROL=erasedups
 fi
 
 
@@ -55,11 +57,10 @@ elif [ -n "$ZSH_VERSION" ]; then
     setopt extendedglob      # Extended globbing. Allows using regular expressions with *
     setopt nocaseglob        # Case insensitive globbing
     setopt rcexpandparam     # Array expension with parameters
-    setopt numericglobsort   # Sort filenames numerically when it makes sense
     setopt nobeep            # No beep
-    setopt appendhistory     # Immediately append history instead of overwriting
     setopt histignorealldups # If a new command is a duplicate, remove the older one
-    setopt autocd            # if only directory path is entered, cd there.
+    setopt share_history
+    setopt hist_ignore_space
 
     zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
@@ -70,7 +71,7 @@ elif [ -n "$ZSH_VERSION" ]; then
     zstyle ':completion:*' cache-path ~/.zsh/cache
     HISTFILE=~/.zhistory
     HISTSIZE=1000
-    SAVEHIST=500
+    SAVEHIST=1000
 
     ### Keybindings section
     bindkey -e
