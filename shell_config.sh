@@ -87,7 +87,7 @@ elif [ -n "$ZSH_VERSION" ]; then
     fi
     bindkey '^[[3~' delete-char # Delete key
 
-    if [ -f ~/.fzf/.zsh ]; then
+    if [ -f ~/.fzf.zsh ]; then
         source ~/.fzf.zsh
         [ "$(uname -s)" = "Darwin" ] && bindkey "ç" fzf-cd-widget
     fi
