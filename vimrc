@@ -59,6 +59,7 @@
         Plug 'cohama/lexima.vim'
         Plug 'lambdalisue/suda.vim'
         Plug 'mhinz/vim-sayonara'
+        Plug 'markonm/traces.vim'
     call plug#end()
 
 
