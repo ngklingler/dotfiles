@@ -28,11 +28,12 @@ function symlink () {
     esac
 
     for file in $files; do
-        chkmk "$backup/$file"
         if [ -f $HOME/.$file ] || [ -L $HOME/.$file ]; then
+            chkmk "$backup/$file"
             cp -a $HOME/.$file $backup/$file
             rm $HOME/.$file
         fi
+        chkmk $HOME/.$file
         ln -s $HOME/dotfiles/$1 $HOME/.$file
     done
 }
@@ -41,7 +42,8 @@ function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
     [ -z "$(command -v nvr)" ] && python3 -m pip install --user neovim-remote
-    for f in "shell_config.sh vimrc config/alacritty/alacritty.yml"; do
+    files="shell_config.sh vimrc config/alacritty/alacritty.yml"
+    for f in $files; do
         symlink $f
     done
     dload 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' "$HOME/.vim/autoload/plug.vim"
