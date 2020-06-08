@@ -56,14 +56,16 @@
         Plug 'prabirshrestha/asyncomplete.vim'
         Plug 'prabirshrestha/asyncomplete-lsp.vim'
         Plug 'mattn/vim-lsp-settings'
-        Plug 'cohama/lexima.vim'
+        Plug 'jiangmiao/auto-pairs'
         Plug 'lambdalisue/suda.vim'
         Plug 'mhinz/vim-sayonara'
         Plug 'markonm/traces.vim'
+        Plug 'tyru/open-browser.vim'
     call plug#end()
 
 
 " Plugin settings
+let g:openbrowser_default_search = 'duckduckgo'
 let g:peekaboo_window = 'vert bo 40new'
 let g:sayonara_confirm_quit = 1
 let g:lsp_diagnostics_echo_cursor = 1
@@ -99,6 +101,9 @@ function! Customtermopen()
 endfunction
 
 " Mappings
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 map <space> <leader>
 " turn off middle click paste
 map <MiddleMouse> <Nop>
