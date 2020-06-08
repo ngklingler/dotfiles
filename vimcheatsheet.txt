@@ -64,6 +64,7 @@ find and replace:
     :%s/OLD/NEW/g to change every occurrence in file
     :%s/OLD/NEW/gc to do above with confirmation on each change
     searches work as motions (i.e. d/foo to delete until foo)
+    :%s/<PATTERN>/<ACTION> to do action on every line matching pattern, g! for every line not matching
 
 windows:
     C-w C-w to jump around windows, = in vimrc to do the same
@@ -88,6 +89,7 @@ completion:
 
 visual mode stuff:
     v to enter visual mode
+    gv to select previous visual selection
     shift-v or V to enter visual line mode
     ctrl-V or ^v to enter visual block mode
     select lines to manipulate

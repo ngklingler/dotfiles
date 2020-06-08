@@ -19,17 +19,15 @@ export GIT_EDITOR="$EDITOR"
 cd () {
     builtin cd "$@" && ls;
     [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd ${@}<cr>i"
-    # TODO what if nvr doesn't exists, handle vim
 }
 
 if ! [ -z "$(command -v fd)" ]; then
     export FZF_DEFAULT_COMMAND="fd ."
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-    HISTSIZE=1000
+    HISTSIZE=10000
     HISTCONTROL=erasedups
 fi
-
 
 
 if [ -n "$BASH_VERSION" ]; then
@@ -70,8 +68,8 @@ elif [ -n "$ZSH_VERSION" ]; then
     zstyle ':completion:*' use-cache on
     zstyle ':completion:*' cache-path ~/.zsh/cache
     HISTFILE=~/.zhistory
-    HISTSIZE=1000
-    SAVEHIST=1000
+    HISTSIZE=10000
+    SAVEHIST=10000
 
     ### Keybindings section
     bindkey -e
