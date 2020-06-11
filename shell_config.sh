@@ -24,9 +24,7 @@ cd () {
 if ! [ -z "$(command -v fd)" ]; then
     export FZF_DEFAULT_COMMAND="fd ."
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-    HISTSIZE=10000
-    HISTCONTROL=erasedups
+    export FZF_ALT_C_COMMAND="fd -t d ."
 fi
 
 
@@ -39,6 +37,9 @@ if [ -n "$BASH_VERSION" ]; then
         bind -m vi-command '"ç": "\C-z\ec\C-z"'
         bind -m vi-insert '"ç": "\C-z\ec\C-z"'
     fi
+
+    HISTSIZE=10000
+    HISTCONTROL=erasedups
 
     [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

@@ -32,13 +32,15 @@ def git():
     ).stdout
     if not status:
         return
-    branch = status[3 : status.find('...')]
+    result = ' ' + status[3 : status.find('...')]
     m = re.match(
         '.*?\[(\w*) (\d*)\].*?', status
     )  # group(1) ahead|behind group(2) commits
+    if m:
+        result += f' {m.group(1)} {m.group(2)}'
     d = {'??': '?', ' M': 'm', 'M ': 'M', 'MM': 'mM', 'A ': 'A'}
     x = {d[i.strip()[:2]] for i in status.splitlines()[1:]}
-    put(f' {branch} {m.group(1)} {m.group(2)} {"".join(x)}')
+    put(f'{result} {"".join(x)}')
 
 
 if __name__ == '__main__':
