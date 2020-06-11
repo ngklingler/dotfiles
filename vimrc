@@ -22,7 +22,6 @@
     set noshowmode  " Don't show mode in command line when switching modes
     set laststatus=2  " Always show statusline
     set switchbuf=useopen  " Switch to window with buffer if one exists
-    " set termguicolors  " Better colors, works on most terminals
     let $NVIM_LISTEN_ADDRESS=v:servername
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
     let &packpath = &runtimepath
@@ -61,10 +60,12 @@
         Plug 'mhinz/vim-sayonara'
         Plug 'markonm/traces.vim'
         Plug 'tyru/open-browser.vim'
+        Plug 'frazrepo/vim-rainbow'
     call plug#end()
 
 
 " Plugin settings
+let g:rainbow_active = 1
 let g:openbrowser_default_search = 'duckduckgo'
 let g:peekaboo_window = 'vert bo 40new'
 let g:sayonara_confirm_quit = 1

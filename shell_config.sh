@@ -4,6 +4,10 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
 [ -z "$PS1" ] && return # return if not interactive
 
+if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
+    export PS1='`python3 $HOME/dotfiles/prompt.py`'
+fi
+
 vi () {
     if [ "$NVIM_LISTEN_ADDRESS" ]; then nvr "$@";
     elif [ "$(command -v nvim)" ]; then nvim "$@";
