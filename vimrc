@@ -58,10 +58,10 @@
         Plug 'mattn/vim-lsp-settings'
         Plug 'jiangmiao/auto-pairs'
         Plug 'lambdalisue/suda.vim'
-        Plug 'mhinz/vim-sayonara'
         Plug 'markonm/traces.vim'
         Plug 'tyru/open-browser.vim'
         Plug 'frazrepo/vim-rainbow'
+        Plug 'moll/vim-bbye'
     call plug#end()
 
 
@@ -132,8 +132,8 @@ nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
 nmap <leader>e :SlimeSend<cr>
 xmap <leader>e <Plug>SlimeRegionSend
 nmap <leader>f :Files 
-nmap <leader>k :Sayonara!<cr>
-nmap <leader>K :Sayonara<cr>
+nmap <leader>k :Bdelete<cr>
+nmap <leader>K :bdelete<cr>
 nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
 nmap <leader>t :call Customtermopen()<cr>i
