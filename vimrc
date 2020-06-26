@@ -27,6 +27,7 @@
     let &packpath = &runtimepath
     set autoindent  " Match indentation of above line
     set autoread  " Read in outside changes
+    set scrolloff=2
 
 
 " Plugins
@@ -130,7 +131,7 @@ nmap <leader>c :History:<cr>
 nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
 nmap <leader>e :SlimeSend<cr>
 xmap <leader>e <Plug>SlimeRegionSend
-nmap <leader>f :Files<cr>
+nmap <leader>f :Files 
 nmap <leader>k :Sayonara!<cr>
 nmap <leader>K :Sayonara<cr>
 nmap <leader>r :Rg 
