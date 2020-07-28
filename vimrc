@@ -69,13 +69,12 @@
 let g:rainbow_active = 1
 let g:openbrowser_default_search = 'duckduckgo'
 let g:peekaboo_window = 'vert bo 40new'
-let g:sayonara_confirm_quit = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_diagnostics_echo_delay = 200
 let g:lsp_virtual_text_enabled = 0
 let g:lsp_highlights_enabled = 0
 let g:fzf_buffers_jump = 1
-let g:editcommand_prompt = '%'
+let g:editcommand_prompt = '>'
 let g:lightline = {
     \ 'active': {
     \ 'left' : [['mode', 'filename', 'modified']],
@@ -93,15 +92,6 @@ colorscheme onedark
 highlight Normal ctermbg=232 guibg=Black " Pitch black background
 set completeopt-=preview  " Make it so completions don't open a preview window
 
-function! Customtermopen()
-    py3 import re; import vim
-    py3 pid = re.compile(r'//(\d+):')
-    py3 buffers = {(b.number, re.search(pid, b.name).group(1)) for b in vim.buffers if b.name.startswith('term://')}
-    py3 buffers = sorted(buffers, key=lambda x: x[1], reverse=True)
-    py3 vim.command(f':b {buffers[0][0]}') if buffers else vim.command(':term')
-    py3 del buffers; del pid; del re
-endfunction
-
 " Mappings
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
@@ -114,8 +104,6 @@ imap <MiddleMouse> <Nop>
 tmap <esc> <c-\><c-n>
 nmap - :bn<CR>
 nmap = <C-w><C-w>
-" Toggle folds with q in normal mode
-nmap <leader><space> za
 nmap <BS> X
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
@@ -134,10 +122,9 @@ xmap <leader>e <Plug>SlimeRegionSend
 nmap <leader>f :Files 
 nmap <leader>k :Bdelete<cr>
 nmap <leader>K :bdelete<cr>
-nmap <leader>r :Rg 
 nmap <leader>s :History/<cr>
-nmap <leader>t :call Customtermopen()<cr>i
 nmap <leader>w :w<cr>
+nmap <leader>z za
 nmap <leader>: :History:<cr>
 nmap <leader>/ :History/<cr>
 

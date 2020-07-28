@@ -22,7 +22,7 @@ export GIT_EDITOR="$EDITOR"
 
 cd () {
     builtin cd "$@" && ls;
-    [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd ${@}<cr>i"
+    [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd $(pwd)<cr>i"
 }
 
 if ! [ -z "$(command -v fd)" ]; then
