@@ -29,6 +29,8 @@
     set autoread  " Read in outside changes
     set scrolloff=2
 
+    au BufRead *.csv set ft=
+    au TermOpen * setlocal nonumber
 
 " Plugins
     " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
