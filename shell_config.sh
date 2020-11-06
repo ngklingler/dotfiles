@@ -4,10 +4,13 @@ export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
 [ -z "$PS1" ] && return # return if not interactive
 
+# Use my custom python prompt if available
 if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
     export PS1='`python3 $HOME/dotfiles/prompt.py`'
 fi
 
+# vi goes to nvr if we are running terminal in nvim, else nvim if it exists,
+# else vim if it exits, else vi
 vi () {
     if [ "$NVIM_LISTEN_ADDRESS" ]; then nvr "$@";
     elif [ "$(command -v nvim)" ]; then nvim "$@";
@@ -21,10 +24,12 @@ export GIT_EDITOR="$EDITOR"
 [ "$NVIM_LISTEN_ADDRESS" ] && export GIT_EDITOR='nvr -cc split --remote-wait'
 
 cd () {
-    builtin cd "$@" && ls;
+    builtin cd "$@" && ls; # ls after switching directory
+    # sync directory change with nvim if running in nvim terminal
     [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd $(pwd)<cr>i"
 }
 
+# have FZF use fd if available, else fdfind (on ubuntu)
 if ! [ -z "$(command -v fd)" ]; then
     export FZF_DEFAULT_COMMAND="fd ."
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -40,6 +45,7 @@ if [ -n "$BASH_VERSION" ]; then
     bind 'set completion-ignore-case on'
     bind 'set show-all-if-unmodified on'
 
+    # FZF shortcuts on mac
     if [[ "$(uname -s)" = "Darwin" ]]; then
         bind -m emacs-standard '"ç": " \C-b\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d"'
         bind -m vi-command '"ç": "\C-z\ec\C-z"'

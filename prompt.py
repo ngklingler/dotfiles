@@ -7,7 +7,7 @@ def put(text):
     print(text, end='')
 
 
-def path(cwd=os.getcwd(), home=os.environ['HOME']):
+def path(cwd=os.getcwd(), home=os.path.expanduser('~')):
     cwd = cwd.replace(home, '~').split(os.sep)
     put(os.sep.join([i[:1] for i in cwd[:-1]] + cwd[-1:]))
 

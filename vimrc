@@ -6,33 +6,34 @@
     set tabstop=4 shiftwidth=4 expandtab  " Tabs are 4 spaces
     set colorcolumn=80  " have a highlighted column for PEP8
     set showmatch " highlight matching (, [, {
-    set relativenumber number " show line numbers
-    set noswapfile  " Disable swap files
+    set relativenumber number " current line has actual line number, above and below are relative
+    set noswapfile  " Disable swap files (unsaved work will be lost on crash)
     set mouse=a  " use mouse for selection, scrolling, eta
-    set hidden  " allow hidden buffers
+    set hidden  " allow hidden buffers (open files you cannot see)
     set hls ic is smartcase  " Highlight search results, ignore case on searches, search as you type
     set foldmethod=indent  " Fold lines on same indent
     set foldlevel=99  " Open all folds
-    set fileformat=unix  " newline line endings
-    set fileignorecase  " turn off case sensitive completions for file and dir completions
+    set fileformat=unix  " newline line endings (\n)
+    set fileignorecase  " turn off case sensitive completions for file and directory completions
     set wildmode=longest,list,full  " Bash like file completions in ex command
     set wildmenu  " Disable cycle menu in ex file completions
-    set clipboard+=unnamedplus,unnamed  " Use the + register on copy (the system clipboard)
+    set clipboard+=unnamedplus,unnamed  " Use system clipboard for yank and put
     set confirm  " Confirm whether to save when quitting with unsaved changes
     set noshowmode  " Don't show mode in command line when switching modes
     set laststatus=2  " Always show statusline
-    set switchbuf=useopen  " Switch to window with buffer if one exists
-    let $NVIM_LISTEN_ADDRESS=v:servername
+    set switchbuf=useopen  " When opening a file, switch to buffer if one already exists
+    let $NVIM_LISTEN_ADDRESS=v:servername " set environment variable for neovim-remote
     set runtimepath^=~/.vim runtimepath+=~/.vim/after
     let &packpath = &runtimepath
     set autoindent  " Match indentation of above line
-    set autoread  " Read in outside changes
-    set scrolloff=2
+    set autoread  " Read in outside changes (if file gets changed elsewhere)
+    set scrolloff=2 " When scrolling, keep the cursor two lines from the end
 
-    au BufRead *.csv set ft=
-    au TermOpen * setlocal nonumber
+    au BufRead *.csv set ft= " disable CSV filetype (seems resource intensive)
+    au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
 
 " Plugins
+    " Install vim-plug if not already there
     " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
     if empty(glob('~/.vim/autoload/plug.vim'))
         silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -40,30 +41,28 @@
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     endif
     call plug#begin()
-        Plug 'sheerun/vim-polyglot'
-        Plug 'joshdick/onedark.vim'
-        Plug 'scrooloose/nerdtree'
-        Plug 'tmux-plugins/vim-tmux-focus-events'
-        Plug 'tpope/vim-commentary'
-        Plug 'godlygeek/tabular'
-        Plug 'tpope/vim-fugitive'
-        Plug 'itchyny/lightline.vim'
-        Plug 'jpalardy/vim-slime'
-        Plug 'brettanomyces/nvim-editcommand'
-        Plug 'junegunn/fzf', { 'do': 'bash install --all' }
-        Plug 'junegunn/fzf.vim'
-        Plug 'junegunn/vim-peekaboo'
-        Plug 'prabirshrestha/async.vim'
-        Plug 'prabirshrestha/vim-lsp'
-        Plug 'prabirshrestha/asyncomplete.vim'
-        Plug 'prabirshrestha/asyncomplete-lsp.vim'
-        Plug 'mattn/vim-lsp-settings'
-        Plug 'jiangmiao/auto-pairs'
-        Plug 'lambdalisue/suda.vim'
-        Plug 'markonm/traces.vim'
-        Plug 'tyru/open-browser.vim'
-        Plug 'frazrepo/vim-rainbow'
-        Plug 'moll/vim-bbye'
+        Plug 'sheerun/vim-polyglot' " A collection of language packs for Vim.
+        Plug 'joshdick/onedark.vim' " Colortheme
+        Plug 'scrooloose/nerdtree' " File tree (use Ctrl-N)
+        Plug 'tpope/vim-commentary' " Comment stuff out with gcc for a line, gc for a selection or motion
+        Plug 'tpope/vim-fugitive' " Git integration
+        Plug 'itchyny/lightline.vim' " Status line at bottom
+        Plug 'jpalardy/vim-slime' " Send lines or selected text to terminal window
+        Plug 'brettanomyces/nvim-editcommand' " Edit command line in terminal with ctrl-x ctrl-e
+        Plug 'junegunn/fzf', { 'do': 'bash install --all' } " Fuzzy Finder
+        Plug 'junegunn/fzf.vim' " Fuzzy Finder commands for vim
+        Plug 'junegunn/vim-peekaboo' " Show register contents when accessing named registers
+        Plug 'prabirshrestha/async.vim' " Related to language server
+        Plug 'prabirshrestha/vim-lsp' " Language server
+        Plug 'prabirshrestha/asyncomplete.vim' " Use language server for autocomplete
+        Plug 'prabirshrestha/asyncomplete-lsp.vim' " Use language server for autocomplete
+        Plug 'mattn/vim-lsp-settings' " Sane settings for language server
+        Plug 'jiangmiao/auto-pairs' " automatically pair quotes, parentheses, brackets, curly braces, backticks
+        Plug 'lambdalisue/suda.vim' " Save as sudo with :SudaWrite
+        Plug 'markonm/traces.vim' " show search and replace changes as you type
+        Plug 'tyru/open-browser.vim' " open URLs in browser with gx
+        Plug 'frazrepo/vim-rainbow' " Color match parentheses, brackets, curly braces
+        Plug 'moll/vim-bbye' " Commands to sanely close buffers
     call plug#end()
 
 

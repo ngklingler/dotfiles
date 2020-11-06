@@ -51,4 +51,4 @@ function install () {
     source $HOME/dotfiles/shell_config.sh
 }
 
-install
+install 
