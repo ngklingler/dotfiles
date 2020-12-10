@@ -28,6 +28,9 @@
     set autoindent  " Match indentation of above line
     set autoread  " Read in outside changes (if file gets changed elsewhere)
     set scrolloff=2 " When scrolling, keep the cursor two lines from the end
+    set breakindent  " Maintain indentation on linebreaks
+    set showbreak=>  " Show linebreaks
+    set lbr " break lines on words
 
     au BufRead *.csv set ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
