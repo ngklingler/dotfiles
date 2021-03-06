@@ -21,12 +21,16 @@ vi () {
 export EDITOR=vi
 export VISUAL="$EDITOR"
 export GIT_EDITOR="$EDITOR"
-[ "$NVIM_LISTEN_ADDRESS" ] && export GIT_EDITOR='nvr -cc split --remote-wait'
+[ "$NVIM_LISTEN_ADDRESS" ] && export GIT_EDITOR='nvr --remote-wait'
 
 cd () {
     builtin cd "$@" && ls; # ls after switching directory
     # sync directory change with nvim if running in nvim terminal
     [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd $(pwd)<cr>i"
+}
+
+vd () {
+ cd `nvr --remote-expr "getcwd()"`
 }
 
 # have FZF use fd if available, else fdfind (on ubuntu)
@@ -37,7 +41,7 @@ if ! [ -z "$(command -v fd)" ]; then
 elif ! [ -z "$(command -v fdfind)" ]; then
     export FZF_DEFAULT_COMMAND="fdfind ."
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="fdfind -t d ."
+    export FZF_ALT_C_COMMAND="fdfind -t d . ~"
 fi
 
 
