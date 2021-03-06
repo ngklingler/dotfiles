@@ -1,4 +1,6 @@
 " Simple settings
+    set autochdir  " Auto change to dir of open file
+    set inccommand=nosplit " Show commands effects (such as substitutions) while entering
     set modeline " File modelines
     set encoding=utf-8
     set list listchars=tab:!·,extends:$,precedes:$,space:·  " Characters to indicate whitespace
@@ -30,7 +32,8 @@
     set scrolloff=2 " When scrolling, keep the cursor two lines from the end
     set breakindent  " Maintain indentation on linebreaks
     set showbreak=>  " Show linebreaks
-    set lbr " break lines on words
+    set lbr  " break lines on words
+    set nofixeol  " Don't add newlines to end of files
 
     au BufRead *.csv set ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
@@ -48,7 +51,6 @@
         Plug 'joshdick/onedark.vim' " Colortheme
         Plug 'scrooloose/nerdtree' " File tree (use Ctrl-N)
         Plug 'tpope/vim-commentary' " Comment stuff out with gcc for a line, gc for a selection or motion
-        Plug 'tpope/vim-fugitive' " Git integration
         Plug 'itchyny/lightline.vim' " Status line at bottom
         Plug 'jpalardy/vim-slime' " Send lines or selected text to terminal window
         Plug 'brettanomyces/nvim-editcommand' " Edit command line in terminal with ctrl-x ctrl-e
@@ -62,10 +64,12 @@
         Plug 'mattn/vim-lsp-settings' " Sane settings for language server
         Plug 'jiangmiao/auto-pairs' " automatically pair quotes, parentheses, brackets, curly braces, backticks
         Plug 'lambdalisue/suda.vim' " Save as sudo with :SudaWrite
-        Plug 'markonm/traces.vim' " show search and replace changes as you type
         Plug 'tyru/open-browser.vim' " open URLs in browser with gx
         Plug 'frazrepo/vim-rainbow' " Color match parentheses, brackets, curly braces
         Plug 'moll/vim-bbye' " Commands to sanely close buffers
+
+        Plug 'tpope/vim-fugitive' " Git integration
+        Plug 'tommcdo/vim-fubitive' " Gbrowse bitbucket
     call plug#end()
 
 
@@ -98,6 +102,10 @@ set completeopt-=preview  " Make it so completions don't open a preview window
 
 " Mappings
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 map <space> <leader>
@@ -106,8 +114,8 @@ map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 " paste in terminal mode
 tmap <esc> <c-\><c-n>
-nmap - :bn<CR>
-nmap = <C-w><C-w>
+nmap - :bp<CR>
+nmap = :bn<CR>
 nmap <BS> X
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
@@ -126,6 +134,8 @@ xmap <leader>e <Plug>SlimeRegionSend
 nmap <leader>f :Files 
 nmap <leader>k :Bdelete<cr>
 nmap <leader>K :bdelete<cr>
+nmap <leader>p "0p
+nmap <leader>P "0P
 nmap <leader>s :History/<cr>
 nmap <leader>w :w<cr>
 nmap <leader>z za
