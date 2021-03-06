@@ -2,14 +2,9 @@ import os
 import re
 import subprocess
 
-
-def put(text):
-    print(text, end='')
-
-
 def path(cwd=os.getcwd(), home=os.path.expanduser('~')):
     cwd = cwd.replace(home, '~').split(os.sep)
-    put(os.sep.join([i[:1] for i in cwd[:-1]] + cwd[-1:]))
+    print(os.sep.join([i[:1] for i in cwd[:-1]] + cwd[-1:]), end='')
 
 def first(string, strings):
     return min(
@@ -21,8 +16,6 @@ def first(string, strings):
             )
         )
     )
-
-
 
 # ## <redacted>...origin/<redacted> [ahead 65, behind 6]
 def git():
@@ -38,7 +31,7 @@ def git():
     if m:
         result += f' {m.group(1)} {m.group(2)}'
     result = result.replace('\n', '')
-    put(f'{result} {"*" if status.splitlines()[1:] else ""}')
+    print(f'{result} {"*" if status.splitlines()[1:] else ""}', end='')
 
 
 if __name__ == '__main__':
