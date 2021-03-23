@@ -21,7 +21,6 @@
     set wildmenu  " Disable cycle menu in ex file completions
     set clipboard+=unnamedplus,unnamed  " Use system clipboard for yank and put
     set confirm  " Confirm whether to save when quitting with unsaved changes
-    set noshowmode  " Don't show mode in command line when switching modes
     set laststatus=2  " Always show statusline
     set switchbuf=useopen  " When opening a file, switch to buffer if one already exists
     let $NVIM_LISTEN_ADDRESS=v:servername " set environment variable for neovim-remote
@@ -51,7 +50,6 @@
         Plug 'joshdick/onedark.vim' " Colortheme
         Plug 'scrooloose/nerdtree' " File tree (use Ctrl-N)
         Plug 'tpope/vim-commentary' " Comment stuff out with gcc for a line, gc for a selection or motion
-        Plug 'itchyny/lightline.vim' " Status line at bottom
         Plug 'jpalardy/vim-slime' " Send lines or selected text to terminal window
         Plug 'brettanomyces/nvim-editcommand' " Edit command line in terminal with ctrl-x ctrl-e
         Plug 'junegunn/fzf', { 'do': 'bash install --all' } " Fuzzy Finder
@@ -83,15 +81,6 @@ let g:lsp_virtual_text_enabled = 0
 let g:lsp_highlights_enabled = 0
 let g:fzf_buffers_jump = 1
 let g:editcommand_prompt = '>'
-let g:lightline = {
-    \ 'active': {
-    \ 'left' : [['mode', 'filename', 'modified']],
-    \ 'right': [['lineinfo', 'percent', 'filetype', 'gitbranch']],
-    \ },
-    \ 'component': {'charvaluehex': '0x%B', 'filename': '%f'},
-    \ 'component_function': {'gitbranch': 'FugitiveHead'},
-\ }
-
 let g:slime_target = "neovim"
 let g:slime_python_ipython = 1
 let g:slime_no_mappings = 0
@@ -100,12 +89,18 @@ colorscheme onedark
 highlight Normal ctermbg=232 guibg=Black " Pitch black background
 set completeopt-=preview  " Make it so completions don't open a preview window
 
+" statusline
+highlight StatusLine ctermfg=46 ctermbg=232
+set statusline=%#StatusLine#
+set statusline+=%f\ %m%y\ %l:%c\ %p%%%=
+set statusline+=%<\ %{systemlist('date\ \"+%a\ %d\ %b\ %H:%M:%S\ %:::z\"')[0]}
+
 " Mappings
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
+nmap <C-Left> <C-w>h
+nmap <C-Down> <C-w>j
+nmap <C-Up> <C-w>k
+nmap <C-Right> <C-w>l
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 map <space> <leader>
@@ -139,7 +134,6 @@ nmap <leader>P "0P
 nmap <leader>s :History/<cr>
 nmap <leader>w :w<cr>
 nmap <leader>z za
-nmap <leader>: :History:<cr>
 nmap <leader>/ :History/<cr>
 
 packloadall  " Load all packages now
