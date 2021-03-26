@@ -138,3 +138,8 @@ nmap <leader>/ :History/<cr>
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
+
+function UpdateStatusLine(timer)
+    execute 'let &ro = &ro'
+endfunction
+let timer = timer_start(1000, 'UpdateStatusLine', {'repeat':-1})
