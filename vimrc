@@ -123,15 +123,16 @@ nmap <C-n> :NERDTreeToggle<CR>
 nmap gd :LspDefinition<cr>
 nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
-nmap <leader>d :call fzf#run({'source': 'fd . ~ -t d', 'sink': 'cd'})<cr>
 nmap <leader>e :SlimeSend<cr>
 xmap <leader>e <Plug>SlimeRegionSend
-nmap <leader>f :Files 
+nmap <leader>f :GFiles<cr>
 nmap <leader>k :Bdelete<cr>
 nmap <leader>K :bdelete<cr>
 nmap <leader>p "0p
 nmap <leader>P "0P
 nmap <leader>s :History/<cr>
+nmap <leader>t :term<cr>
+nmap <leader>T :vnew term://bash<cr>
 nmap <leader>w :w<cr>
 nmap <leader>z za
 nmap <leader>/ :History/<cr>
@@ -139,7 +140,7 @@ nmap <leader>/ :History/<cr>
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
 
-function UpdateStatusLine(timer)
+function! UpdateStatusLine(timer)
     execute 'let &ro = &ro'
 endfunction
 let timer = timer_start(1000, 'UpdateStatusLine', {'repeat':-1})

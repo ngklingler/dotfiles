@@ -33,17 +33,17 @@ vd () {
  cd `nvr --remote-expr "getcwd()"`
 }
 
-# have FZF use fd if available, else fdfind (on ubuntu)
 if ! [ -z "$(command -v fd)" ]; then
-    export FZF_DEFAULT_COMMAND="fd ."
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="fd -t d . ~"
+    export FIND_COMMAND="fd"
 elif ! [ -z "$(command -v fdfind)" ]; then
-    export FZF_DEFAULT_COMMAND="fdfind ."
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="fdfind -t d . ~"
+    export FIND_COMMAND="fdfind"
 fi
-
+# what if neither?
+export FZF_DEFAULT_COMMAND="${FIND_COMMAND} ."
+export FZF_DEFAULT_OPTS="--bind 'ctrl-h:change-prompt(~ Files> )+reload(${FZF_DEFAULT_COMMAND} ~)' --bind 'ctrl-g:change-prompt(Git Files> )+reload(${FZF_DEFAULT_COMMAND} `git rev-parse --show-toplevel 2> /dev/null`)' --bind 'ctrl-r:change-prompt(Files>)+reload(${FZF_DEFAULT_COMMAND})' --header 'Ctrl-H: Search from Home Directory / Ctrl-G: Search Git Files / Ctrl-R: Search Current Directory'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="${FIND_COMMAND} -t d ."
+export FZF_ALT_C_OPTS="--bind 'ctrl-h:change-prompt(~ Directories> )+reload(${FZF_ALT_C_COMMAND} ~)' --bind 'ctrl-g:change-prompt(Git Directories> )+reload(${FZF_ALT_C_COMMAND} `git rev-parse --show-toplevel 2> /dev/null`)' --bind 'ctrl-r:change-prompt(Directories>)+reload(${FZF_ALT_C_COMMAND})' --header 'Ctrl-H: Search from Home Directory / Ctrl-G: Search Git Directories / Ctrl-R: Search Current Directory'"
 
 if [ -n "$BASH_VERSION" ]; then
     bind 'set completion-ignore-case on'
