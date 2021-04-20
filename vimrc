@@ -48,7 +48,6 @@
     call plug#begin()
         Plug 'sheerun/vim-polyglot' " A collection of language packs for Vim.
         Plug 'joshdick/onedark.vim' " Colortheme
-        Plug 'scrooloose/nerdtree' " File tree (use Ctrl-N)
         Plug 'tpope/vim-commentary' " Comment stuff out with gcc for a line, gc for a selection or motion
         Plug 'jpalardy/vim-slime' " Send lines or selected text to terminal window
         Plug 'brettanomyces/nvim-editcommand' " Edit command line in terminal with ctrl-x ctrl-e
@@ -65,6 +64,7 @@
         Plug 'tyru/open-browser.vim' " open URLs in browser with gx
         Plug 'frazrepo/vim-rainbow' " Color match parentheses, brackets, curly braces
         Plug 'moll/vim-bbye' " Commands to sanely close buffers
+        Plug 'tpope/vim-unimpaired' " Mappings for common things
 
         Plug 'tpope/vim-fugitive' " Git integration
         Plug 'tommcdo/vim-fubitive' " Gbrowse bitbucket
@@ -77,7 +77,7 @@ let g:openbrowser_default_search = 'duckduckgo'
 let g:peekaboo_window = 'vert bo 40new'
 let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_diagnostics_echo_delay = 200
-let g:lsp_virtual_text_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_highlights_enabled = 0
 let g:fzf_buffers_jump = 1
 let g:editcommand_prompt = '>'
@@ -107,10 +107,7 @@ map <space> <leader>
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
-" paste in terminal mode
 tmap <esc> <c-\><c-n>
-nmap - :bp<CR>
-nmap = :bn<CR>
 nmap <BS> X
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
@@ -118,14 +115,15 @@ nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " Enter selects an autocompletion if in the autocompletion menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-" C-n Toggles NERDTree
-nmap <C-n> :NERDTreeToggle<CR>
 nmap gd :LspDefinition<cr>
 nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
 nmap <leader>e :SlimeSend<cr>
 xmap <leader>e <Plug>SlimeRegionSend
-nmap <leader>f :GFiles<cr>
+" TODO make Files vs GFiles depend on whether in git repo or not
+nmap <leader>f :Files<cr>
+nmap <leader>g :GFiles<cr>
+nmap <leader>h :Helptags<cr>
 nmap <leader>k :Bdelete<cr>
 nmap <leader>K :bdelete<cr>
 nmap <leader>p "0p
