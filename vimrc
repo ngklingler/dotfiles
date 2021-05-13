@@ -34,7 +34,7 @@
     set lbr  " break lines on words
     set nofixeol  " Don't add newlines to end of files
 
-    au BufRead *.csv set ft= " disable CSV filetype (seems resource intensive)
+    au BufRead *.csv setlocal ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
 
 " Plugins
@@ -54,31 +54,30 @@
         Plug 'junegunn/fzf', { 'do': 'bash install --all' } " Fuzzy Finder
         Plug 'junegunn/fzf.vim' " Fuzzy Finder commands for vim
         Plug 'junegunn/vim-peekaboo' " Show register contents when accessing named registers
-        Plug 'prabirshrestha/async.vim' " Related to language server
-        Plug 'prabirshrestha/vim-lsp' " Language server
-        Plug 'prabirshrestha/asyncomplete.vim' " Use language server for autocomplete
-        Plug 'prabirshrestha/asyncomplete-lsp.vim' " Use language server for autocomplete
-        Plug 'mattn/vim-lsp-settings' " Sane settings for language server
         Plug 'jiangmiao/auto-pairs' " automatically pair quotes, parentheses, brackets, curly braces, backticks
         Plug 'lambdalisue/suda.vim' " Save as sudo with :SudaWrite
         Plug 'tyru/open-browser.vim' " open URLs in browser with gx
         Plug 'frazrepo/vim-rainbow' " Color match parentheses, brackets, curly braces
         Plug 'moll/vim-bbye' " Commands to sanely close buffers
         Plug 'tpope/vim-unimpaired' " Mappings for common things
+        Plug 'tpope/vim-repeat' " Repeat things from vim-unimpaired
 
         Plug 'tpope/vim-fugitive' " Git integration
         Plug 'tommcdo/vim-fubitive' " Gbrowse bitbucket
+
+        Plug 'neovim/nvim-lspconfig'
+        Plug 'hrsh7th/nvim-compe'
+
+        Plug 'easymotion/vim-easymotion'
+        Plug 'gu-fan/riv.vim'
     call plug#end()
 
-
 " Plugin settings
+let g:fubitive_domain_pattern = 'bitbucket\.build\.dkinternal\.com'
+let g:riv_disable_indent = 1
 let g:rainbow_active = 1
 let g:openbrowser_default_search = 'duckduckgo'
 let g:peekaboo_window = 'vert bo 40new'
-let g:lsp_diagnostics_echo_cursor = 1
-let g:lsp_diagnostics_echo_delay = 200
-let g:lsp_diagnostics_virtual_text_enabled = 0
-let g:lsp_highlights_enabled = 0
 let g:fzf_buffers_jump = 1
 let g:editcommand_prompt = '>'
 let g:slime_target = "neovim"
@@ -87,12 +86,13 @@ let g:slime_no_mappings = 0
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232 guibg=Black " Pitch black background
-set completeopt-=preview  " Make it so completions don't open a preview window
+set completeopt=menuone,noinsert,noselect
+
 
 " statusline
 highlight StatusLine ctermfg=46 ctermbg=232
 set statusline=%#StatusLine#
-set statusline+=%f\ %m%y\ %l:%c\ %p%%%=
+set statusline+=%f\ %m%y\ %l:%c\ %p%%\ Ch:%{&channel}\ %=
 set statusline+=%<\ %{systemlist('date\ \"+%a\ %d\ %b\ %H:%M:%S\ %:::z\"')[0]}
 
 " Mappings
@@ -115,13 +115,19 @@ nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " Enter selects an autocompletion if in the autocompletion menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-nmap gd :LspDefinition<cr>
+
+nmap <leader>ld :lua vim.lsp.buf.definition()<cr>
+nmap <leader>lh :lua vim.lsp.buf.hover()<cr>
+" nmap <leader>lr :lua vim.lsp.buf.references()<cr>
+nmap <leader>lr :lua vim.lsp.buf.rename()<cr>
+nmap <leader>lf :lua vim.lsp.buf.formatting()<cr>
+
 nmap <leader>b :Buffers<cr>
 nmap <leader>c :History:<cr>
 nmap <leader>e :SlimeSend<cr>
 xmap <leader>e <Plug>SlimeRegionSend
 " TODO make Files vs GFiles depend on whether in git repo or not
-nmap <leader>f :Files<cr>
+nmap <leader>f :Files ~<cr>
 nmap <leader>g :GFiles<cr>
 nmap <leader>h :Helptags<cr>
 nmap <leader>k :Bdelete<cr>
@@ -134,6 +140,11 @@ nmap <leader>T :vnew term://bash<cr>
 nmap <leader>w :w<cr>
 nmap <leader>z za
 nmap <leader>/ :History/<cr>
+" TODO explore v and o mode mappings
+nmap f <Plug>(easymotion-s)
+nmap F <Plug>(easymotion-sn)
+nmap w <Plug>(easymotion-overwin-w)
+nmap W <Plug>(easymotion-bd-W)
 
 packloadall  " Load all packages now
 silent! helptags ALL  " Load all helptags in package docs
@@ -142,3 +153,33 @@ function! UpdateStatusLine(timer)
     execute 'let &ro = &ro'
 endfunction
 let timer = timer_start(1000, 'UpdateStatusLine', {'repeat':-1})
+
+" TODO setup language server installation
+lua << EOF
+require'lspconfig'.pyls.setup{}
+require'lspconfig'.terraformls.setup{}
+
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    vsnip = true;
+  };
+}
+EOF
