@@ -33,6 +33,7 @@
     set showbreak=>  " Show linebreaks
     set lbr  " break lines on words
     set nofixeol  " Don't add newlines to end of files
+    set numberwidth=1  " Less space to left of ruler
 
     au BufRead *.csv setlocal ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
@@ -86,7 +87,7 @@ let g:slime_no_mappings = 0
 let g:onedark_termcolors=256
 colorscheme onedark
 highlight Normal ctermbg=232 guibg=Black " Pitch black background
-set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noinsert,noselect
 
 
 " statusline
@@ -97,24 +98,30 @@ set statusline+=%<\ %{systemlist('date\ \"+%a\ %d\ %b\ %H:%M:%S\ %:::z\"')[0]}
 
 " Mappings
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap <C-Left> <C-w>h
-nmap <C-Down> <C-w>j
-nmap <C-Up> <C-w>k
-nmap <C-Right> <C-w>l
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 map <space> <leader>
+tmap <esc> <c-\><c-n>
+nmap <BS> X
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
-tmap <esc> <c-\><c-n>
-nmap <BS> X
+" Window navigations
+nmap <leader>h <c-w>h
+nmap <leader>j <c-w>j
+nmap <leader>k <c-w>k
+nmap <leader>l <c-w>l
+nmap <leader>H <c-w>H
+nmap <leader>J <c-w>J
+nmap <leader>K <c-w>K
+nmap <leader>L <c-w>L
+
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
 " Tab cycles through autocompletions if the autocompletion menu is open
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " Enter selects an autocompletion if in the autocompletion menu
-imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+" imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 nmap <leader>ld :lua vim.lsp.buf.definition()<cr>
 nmap <leader>lh :lua vim.lsp.buf.hover()<cr>
@@ -129,7 +136,7 @@ xmap <leader>e <Plug>SlimeRegionSend
 " TODO make Files vs GFiles depend on whether in git repo or not
 nmap <leader>f :Files ~<cr>
 nmap <leader>g :GFiles<cr>
-nmap <leader>h :Helptags<cr>
+" nmap <leader>h :Helptags<cr>
 nmap <leader>k :Bdelete<cr>
 nmap <leader>K :bdelete<cr>
 nmap <leader>p "0p
@@ -160,19 +167,7 @@ require'lspconfig'.pyls.setup{}
 require'lspconfig'.terraformls.setup{}
 
 require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
+  preselect = 'disable';
   source = {
     path = true;
     buffer = true;
@@ -180,6 +175,7 @@ require'compe'.setup {
     nvim_lsp = true;
     nvim_lua = true;
     vsnip = true;
+    emoji = true;
   };
 }
 EOF
