@@ -29,6 +29,7 @@ function symlink () {
         "vimrc") files="config/nvim/init.vim vimrc";;
         "config/alacritty/alacritty.yml") files="$1";;
         "ipython/profile_default/startup/fzf.py") files="$1";;
+        "taskbook.json") files="$1";;
     esac
 
     for file in $files; do
@@ -46,7 +47,7 @@ function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
     [ -z "$(command -v nvr)" ] && python3 -m pip install --user neovim-remote
-    files="shell_config.sh vimrc config/alacritty/alacritty.yml ipython/profile_default/startup/fzf.py"
+    files="shell_config.sh vimrc config/alacritty/alacritty.yml ipython/profile_default/startup/fzf.py taskbook.json"
     for f in $files; do
         symlink $f
     done
