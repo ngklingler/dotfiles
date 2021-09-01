@@ -35,3 +35,6 @@ You may notice that `~/.zshrc` and `~/.bashrc` are both symlinked to `shell_conf
   10. sources `fzf` files if available
 
 ## vimrc
+
+## TODO
+* make aliases executables (i.e. bash scripts in PATH) so that processes that don't source bashrc or zshrc can leverage them. Primary candidates are vi and docker for now

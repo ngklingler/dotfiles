@@ -13,12 +13,13 @@
     set mouse=a  " use mouse for selection, scrolling, eta
     set hidden  " allow hidden buffers (open files you cannot see)
     set hls ic is smartcase  " Highlight search results, ignore case on searches, search as you type
-    set foldmethod=indent  " Fold lines on same indent
-    set foldlevel=99  " Open all folds
+    set foldmethod=expr
+    set foldexpr=nvim_treesitter#foldexpr()
     set fileformat=unix  " newline line endings (\n)
     set fileignorecase  " turn off case sensitive completions for file and directory completions
     set wildmode=longest,list,full  " Bash like file completions in ex command
     set wildmenu  " Disable cycle menu in ex file completions
+    set wildignorecase
     set clipboard+=unnamedplus,unnamed  " Use system clipboard for yank and put
     set confirm  " Confirm whether to save when quitting with unsaved changes
     set laststatus=2  " Always show statusline
@@ -37,6 +38,7 @@
 
     au BufRead *.csv setlocal ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
+    au VimEnter * terminal
 
 " Plugins
     " Install vim-plug if not already there
@@ -54,7 +56,6 @@
         Plug 'brettanomyces/nvim-editcommand' " Edit command line in terminal with ctrl-x ctrl-e
         Plug 'junegunn/fzf', { 'do': 'bash install --all' } " Fuzzy Finder
         Plug 'junegunn/fzf.vim' " Fuzzy Finder commands for vim
-        Plug 'junegunn/vim-peekaboo' " Show register contents when accessing named registers
         Plug 'jiangmiao/auto-pairs' " automatically pair quotes, parentheses, brackets, curly braces, backticks
         Plug 'lambdalisue/suda.vim' " Save as sudo with :SudaWrite
         Plug 'tyru/open-browser.vim' " open URLs in browser with gx
@@ -67,13 +68,21 @@
         Plug 'tommcdo/vim-fubitive' " Gbrowse bitbucket
 
         Plug 'neovim/nvim-lspconfig'
+        Plug 'kabouzeid/nvim-lspinstall'
         Plug 'hrsh7th/nvim-compe'
+        Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
         Plug 'easymotion/vim-easymotion'
         Plug 'gu-fan/riv.vim'
+
+        Plug 'lervag/wiki.vim'
+        Plug 'lervag/wiki-ft.vim'
+
+        Plug 'folke/which-key.nvim'
     call plug#end()
 
 " Plugin settings
+let g:wiki_root = '~/me/wiki'
 let g:fubitive_domain_pattern = 'bitbucket\.build\.dkinternal\.com'
 let g:riv_disable_indent = 1
 let g:rainbow_active = 1
@@ -102,25 +111,27 @@ nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 map <space> <leader>
 tmap <esc> <c-\><c-n>
-nmap <BS> X
+" nmap <BS> X
 " turn off middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 " Window navigations
-nmap <leader>h <c-w>h
-nmap <leader>j <c-w>j
-nmap <leader>k <c-w>k
-nmap <leader>l <c-w>l
-nmap <leader>H <c-w>H
-nmap <leader>J <c-w>J
-nmap <leader>K <c-w>K
-nmap <leader>L <c-w>L
+nmap <c-left> <c-w>h
+nmap <c-down> <c-w>j
+nmap <c-up> <c-w>k
+nmap <c-right> <c-w>l
+nmap <m-left> <c-w>H
+nmap <m-down> <c-w>J
+nmap <m-up> <c-w>K
+nmap <m-right> <c-w>L
+
 
 " Make <Esc><Esc> clear search highlights
 nmap <silent> <Esc><Esc> <Esc>:noh<CR><Esc>
 " Tab cycles through autocompletions if the autocompletion menu is open
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " Enter selects an autocompletion if in the autocompletion menu
+" Disabled because it causes us to get stuck trying to hit enter
 " imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 nmap <leader>ld :lua vim.lsp.buf.definition()<cr>
@@ -163,11 +174,28 @@ let timer = timer_start(1000, 'UpdateStatusLine', {'repeat':-1})
 
 " TODO setup language server installation
 lua << EOF
-require'lspconfig'.pyls.setup{}
-require'lspconfig'.terraformls.setup{}
+local function setup_servers()
+  require'lspinstall'.setup()
+  local servers = require'lspinstall'.installed_servers()
+  for _, server in pairs(servers) do
+    require'lspconfig'[server].setup{}
+  end
+end
+
+setup_servers()
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end
+
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "python", "bash", "dockerfile", "json", "vim", "yaml", "toml", "hcl"}
+}
 
 require'compe'.setup {
-  preselect = 'disable';
+  preselect = 'enable';
   source = {
     path = true;
     buffer = true;
@@ -178,4 +206,6 @@ require'compe'.setup {
     emoji = true;
   };
 }
+
+require('which-key').setup{}
 EOF
