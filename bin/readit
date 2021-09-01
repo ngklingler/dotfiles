@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# readable $1 | w3m -T text/html
+# readable $1 | firefox "data:text/html;base64,$(base64 -w 0 <&0)"
+readable $1 > /tmp/readit.html && firefox /tmp/readit.html
