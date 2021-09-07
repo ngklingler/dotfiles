@@ -46,8 +46,7 @@ function symlink () {
 function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
-    [ -z "$(command -v nvr)" ] && python3 -m pip install --user neovim-remote
-    files="shell_config.sh vimrc config/alacritty/alacritty.yml ipython/profile_default/startup/fzf.py taskbook.json"
+    files="shell_config.sh vimrc ipython/profile_default/startup/fzf.py taskbook.json"
     for f in $files; do
         symlink $f
     done

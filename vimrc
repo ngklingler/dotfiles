@@ -158,8 +158,6 @@ nmap <leader>ss :lua require'telescope.builtin'.spell_suggest{}<cr>
 
 nmap <leader>e :SlimeSend<cr>
 xmap <leader>e <Plug>SlimeRegionSend
-" TODO make Files vs GFiles depend on whether in git repo or not
-" nmap <leader>h :Helptags<cr>
 nmap <leader>k :Bdelete<cr>
 nmap <leader>K :bdelete<cr>
 nmap <leader>t :term<cr>
