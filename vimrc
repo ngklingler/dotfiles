@@ -35,6 +35,7 @@
     set lbr  " break lines on words
     set nofixeol  " Don't add newlines to end of files
     set numberwidth=1  " Less space to left of ruler
+    set conceallevel=2
 
     au BufRead *.csv setlocal ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
@@ -71,19 +72,28 @@
         Plug 'easymotion/vim-easymotion'
         Plug 'gu-fan/riv.vim'
 
-        Plug 'lervag/wiki.vim'
-        Plug 'lervag/wiki-ft.vim'
 
         Plug 'folke/which-key.nvim'
 
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
 
-        Plug 'nanotee/sqls.nvim'
+        Plug 'editorconfig/editorconfig-vim'
+
+        Plug 'lervag/wiki.vim'
+
+        Plug 'tpope/vim-dadbod'
+        Plug 'kristijanhusak/vim-dadbod-ui'
+        Plug 'evansalter/vim-checklist'
     call plug#end()
 
 " Plugin settings
-let g:wiki_root = '~/me/wiki'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:wiki_root = '~/me'
+let g:wiki_filetypes = ['md']
+let g:wiki_link_extension = '.md'
+let g:wiki_link_target_type = 'md'
+let g:wiki_mappings_use_defaults = 'local'
 let g:riv_disable_indent = 1
 let g:rainbow_active = 1
 let g:openbrowser_default_search = 'duckduckgo'
@@ -149,6 +159,14 @@ nmap <leader>lg :lua require'telescope.builtin'.live_grep{}<cr>
 nmap <leader>fb :lua require'telescope.builtin'.file_browser{}<cr>
 nmap <leader>ht :lua require'telescope.builtin'.help_tags{}<cr>
 nmap <leader>ss :lua require'telescope.builtin'.spell_suggest{}<cr>
+
+nmap <leader>ni <plug>(wiki-index)
+nmap <leader>nj <plug>(wiki-journal)
+nmap <leader>np <plug>(wiki-journal-prev)
+nmap <leader>nn <plug>(wiki-journal-next)
+
+nmap <leader>x :ChecklistToggleCheckbox<cr>
+
 "
 " nmap <leader>ld :lua vim.lsp.buf.definition()<cr>
 " nmap <leader>lh :lua vim.lsp.buf.hover()<cr>
@@ -210,20 +228,4 @@ require'compe'.setup {
 }
 
 require('which-key').setup{}
-
-require'lspconfig'.sqls.setup{
-  settings = {
-    sqls = {
-      connections = {
-      },
-    },
-  },
-  on_attach = function(client)
-    client.resolved_capabilities.execute_command = true
-
-    require'sqls'.setup{
-      picker = 'telescope'
-    }
-  end
-}
 EOF
