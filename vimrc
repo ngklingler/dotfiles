@@ -85,9 +85,13 @@
         Plug 'tpope/vim-dadbod'
         Plug 'kristijanhusak/vim-dadbod-ui'
         Plug 'evansalter/vim-checklist'
+        Plug 'plasticboy/vim-markdown'
+
+
     call plug#end()
 
 " Plugin settings
+let g:polygot_disabled = ['markdown']
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:wiki_root = '~/me'
 let g:wiki_filetypes = ['md']
