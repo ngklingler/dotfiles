@@ -1,0 +1,13 @@
+[pull]
+    rebase = true
+[push]
+    default = current
+[alias]
+    track = "!git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`"
+[core]
+    safeclrf = true
+    autocrlf = input ;; on windows this should be set to true
+[rerere]
+    enabled = true
+[submodule]
+    recurse = true

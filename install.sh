@@ -29,7 +29,7 @@ function symlink () {
         "vimrc") files="config/nvim/init.vim vimrc";;
         "config/alacritty/alacritty.yml") files="$1";;
         "ipython/profile_default/startup/fzf.py") files="$1";;
-        "taskbook.json") files="$1";;
+        "gitconfig") files="$1";;
     esac
 
     for file in $files; do
@@ -46,7 +46,7 @@ function symlink () {
 function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
-    files="shell_config.sh vimrc ipython/profile_default/startup/fzf.py taskbook.json"
+    files="shell_config.sh vimrc ipython/profile_default/startup/fzf.py gitconfig"
     for f in $files; do
         symlink $f
     done
