@@ -2,23 +2,6 @@ source $HOME/dotfiles/machine.sh
 
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
-[ -z "$PS1" ] && return # return if not interactive
-
-if [ "$(command -v bw)" ]; then
-    unlock_bw () {
-        export BW_SESSION=$($(which bw) unlock --raw)
-    }
-
-    if [ -z "$BW_SESSION" ]; then
-        echo -n "Unlock Bitwarden (y/n)?"
-        read answer
-        if [ "$answer" != "${answer#[Yy]}" ]; then
-            unlock_bw
-        fi
-    fi
-fi
-
-
 # Use my custom python prompt if available
 if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
     export PS1='`python3 $HOME/dotfiles/prompt.py`'
