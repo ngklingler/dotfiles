@@ -13,8 +13,8 @@
     set mouse=a  " use mouse for selection, scrolling, eta
     set hidden  " allow hidden buffers (open files you cannot see)
     set hls ic is smartcase  " Highlight search results, ignore case on searches, search as you type
-    set foldmethod=indent
-    set foldlevel=99
+    " set foldmethod=indent
+    " set foldlevel=99
     set fileformat=unix  " newline line endings (\n)
     set fileignorecase  " turn off case sensitive completions for file and directory completions
     set wildmode=longest,list,full  " Bash like file completions in ex command
@@ -40,6 +40,10 @@
     au BufRead *.csv setlocal ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
     au VimEnter * terminal
+    " au BufWinLeave ?* silent mkview " This and below save location in file between open and close
+    " au BufWinEnter ?* silent! loadview
+
+    let g:polyglot_disabled = ['md', 'csv']
 
 " Plugins
     " Install vim-plug if not already there
@@ -87,7 +91,9 @@
         Plug 'evansalter/vim-checklist'
         Plug 'plasticboy/vim-markdown'
 
+        Plug 'preservim/nerdtree'
 
+        Plug 'pacha/vem-tabline'
     call plug#end()
 
 " Plugin settings
@@ -170,6 +176,7 @@ nmap <leader>np <plug>(wiki-journal-prev)
 nmap <leader>nn <plug>(wiki-journal-next)
 
 nmap <leader>x :ChecklistToggleCheckbox<cr>
+nnoremap <c-n> :NERDTreeToggle<CR>
 
 "
 " nmap <leader>ld :lua vim.lsp.buf.definition()<cr>
