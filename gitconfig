@@ -1,3 +1,5 @@
+[user]
+    name = Nick Klingler
 [pull]
     rebase = true
 [push]
@@ -11,3 +13,5 @@
     enabled = true
 [submodule]
     recurse = true
+[init]
+    defaultBranch = main

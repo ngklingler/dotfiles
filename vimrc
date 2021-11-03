@@ -39,7 +39,7 @@
 
     au BufRead *.csv setlocal ft= " disable CSV filetype (seems resource intensive)
     au TermOpen * setlocal nonumber " in terminal mode, don't use absolute line number
-    au VimEnter * terminal
+    " au VimEnter * terminal
     " au BufWinLeave ?* silent mkview " This and below save location in file between open and close
     " au BufWinEnter ?* silent! loadview
 

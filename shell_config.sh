@@ -1,6 +1,6 @@
 source $HOME/dotfiles/machine.sh
 
-export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/dotfiles/bin"
 
 # Use my custom python prompt if available
 if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
