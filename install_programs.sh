@@ -3,7 +3,6 @@ source shell_config.sh
 # TODO curl may not exist, also depends on git
 [ -z "$(command -v brew)" ] && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-[ -z "$(command -v nvim)" ] && brew install neovim
 [ -z "$(command -v fd)" ] && brew install fd
 [ -z "$(command -v rg)" ] && brew install ripgrep
 [ -z "$(command -v pipx)" ] && brew install pipx
@@ -15,7 +14,6 @@ source shell_config.sh
 [ -z "$(command -v firefox)" ] && brew install --cask firefox
 [ -z "$(command -v spotify)" ] && brew install --cask spotify
 [ -z "$(command -v alacritty)" ] && brew install --cask alacritty
-[ -z "$(command -v nvr)" ] && pipx install neovim-remote # isn't in path
 # brew outputs bash completion file locations, capture and source
 # ==> Caveats
 # Bash completion has been installed to:

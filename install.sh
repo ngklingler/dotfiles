@@ -26,8 +26,6 @@ function symlink () {
     # TODO this list is duplicated in the install function
     case "$1" in
         "shell_config.sh") files="bashrc bash_profile zshrc";;
-        "vimrc") files="config/nvim/init.vim vimrc";;
-        "config/alacritty/alacritty.yml") files="$1";;
         "ipython/profile_default/startup/fzf.py") files="$1";;
         "gitconfig") files="$1";;
     esac
@@ -46,11 +44,10 @@ function symlink () {
 function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
-    files="shell_config.sh vimrc ipython/profile_default/startup/fzf.py gitconfig"
+    files="shell_config.sh ipython/profile_default/startup/fzf.py gitconfig"
     for f in $files; do
         symlink $f
     done
-    [ -f "$HOME./vim/autoload/plug.vim" ] || dload 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' "$HOME/.vim/autoload/plug.vim"
     [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
     source $HOME/dotfiles/shell_config.sh
 }
