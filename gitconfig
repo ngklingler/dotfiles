@@ -15,3 +15,5 @@
     recurse = true
 [init]
     defaultBranch = main
+[rebase]
+	autoStash = true

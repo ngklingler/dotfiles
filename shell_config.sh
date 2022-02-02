@@ -1,4 +1,5 @@
 source $HOME/dotfiles/machine.sh
+source $HOME/.env
 
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/dotfiles/bin"
 
@@ -8,28 +9,12 @@ if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
 fi
 
 [ "$(command -v firefox)" ] && alias ff=firefox
-# vi goes to nvr if we are running terminal in nvim, else nvim if it exists,
-# else vim if it exits, else vi
-vi () {
-    if [ "$NVIM_LISTEN_ADDRESS" ]; then nvr "$@";
-    elif [ "$(command -v nvim)" ]; then nvim "$@";
-    elif [ "$(command -v vim)" ]; then vim "$@";
-    else vi "$@";
-    fi
-}
-export EDITOR=vi
+export EDITOR=code
 export VISUAL="$EDITOR"
-export GIT_EDITOR="$EDITOR"
-[ "$NVIM_LISTEN_ADDRESS" ] && export GIT_EDITOR='nvr --remote-wait'
+export GIT_EDITOR="code --wait"
 
 cd () {
     builtin cd "$@" && ls; # ls after switching directory
-    # sync directory change with nvim if running in nvim terminal
-    [ -z "$NVIM_LISTEN_ADDRESS" ] || nvr --remote-send "<esc>:cd $(pwd)<cr>i"
-}
-
-vd () {
- cd `nvr --remote-expr "getcwd()"`
 }
 
 if ! [ -z "$(command -v fd)" ]; then
