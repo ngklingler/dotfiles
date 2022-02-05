@@ -1,17 +1,15 @@
 #!/bin/sh
 
 set -e
-sync () {
+if  [ ! "$BW_SESSION" ]; then
     export BW_SESSION=$(bw unlock --raw)
-    bw sync
-    keys='gitlab github'
-    eval $(ssh-agent -s)
-    for key in $keys; do
-        bw get item ssh/$key | jq -r .notes > ~/.ssh/$key
-        chmod 600 ~/.ssh/$key
-        ssh-add ~/.ssh/$key
-    done
-    unset BW_SESSION
-}
-
-sync
+fi
+bw sync
+keys='gitlab github'
+eval $(ssh-agent -s)
+for key in $keys; do
+    bw get item ssh/$key | jq -r .notes > ~/.ssh/$key
+    chmod 600 ~/.ssh/$key
+    ssh-add ~/.ssh/$key # didn't seem to be working, took this all out of the function to see if it was a subprocess issue
+done
+unset BW_SESSION
