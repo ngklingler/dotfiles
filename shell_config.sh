@@ -46,6 +46,7 @@ if [ -n "$BASH_VERSION" ]; then
     [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 elif [ -n "$ZSH_VERSION" ]; then
+    source $HOME/dotfiles/fzf-tab/fzf-tab.plugin.zsh
     typeset -U PATH path # deduplicate path
     # Completion
     autoload -Uz compinit colors
