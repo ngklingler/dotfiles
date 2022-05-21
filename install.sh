@@ -26,8 +26,7 @@ function symlink () {
     # TODO this list is duplicated in the install function
     case "$1" in
         "shell_config.sh") files="bashrc bash_profile zshrc";;
-        "ipython/profile_default/startup/fzf.py") files="$1";;
-        "gitconfig") files="$1";;
+        *) files="$1";;
     esac
 
     for file in $files; do
@@ -44,7 +43,7 @@ function symlink () {
 function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
-    files="shell_config.sh ipython/profile_default/startup/fzf.py gitconfig"
+    files="shell_config.sh ipython/profile_default/startup/fzf.py gitconfig ssh/config"
     for f in $files; do
         symlink $f
     done
