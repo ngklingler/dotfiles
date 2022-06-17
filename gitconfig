@@ -9,6 +9,7 @@
 [core]
     safeclrf = true
     autocrlf = input ;; on windows this should be set to true
+    fileMode = false
 [rerere]
     enabled = true
 [submodule]
