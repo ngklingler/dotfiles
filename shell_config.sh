@@ -1,7 +1,7 @@
-source $HOME/dotfiles/machine.sh
-source $HOME/.env
+[ -f $HOME/dotfiles/machine.sh ] && source $HOME/dotfiles/machine.sh
+[ -f $HOME/.env ] && source $HOME/.env
 
-export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/dotfiles/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Use my custom python prompt if available
 if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
