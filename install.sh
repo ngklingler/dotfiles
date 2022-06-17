@@ -3,23 +3,6 @@ function chkmk () {
     [ -d $1 ] || mkdir -p $(dirname $1)
 }
 
-function dload () {
-    echo "downloading $1 to $2"
-    chkmk $2
-    if [ "$(command -v curl)" ]; then
-        curl $1 -o $2
-    elif [ "$(command -v wget)" ]; then
-        wget $1 -O $2
-    elif [ "$(command -v python3)" ]; then
-        python3 << EOF
-import urllib.request as x
-with open('$2', 'wb') as f:
-    f.write(x.urlopen("$1").read())
-EOF
-    fi
-}
-
-
 function symlink () {
     dir=$HOME/dotfiles
     backup=$HOME/dotfiles/old_dotfiles
@@ -43,11 +26,10 @@ function symlink () {
 function install () {
     [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
     # TODO install git, pip, fzf
-    files="shell_config.sh ipython/profile_default/startup/fzf.py gitconfig ssh/config"
+    files="shell_config.sh gitconfig ssh/config"
     for f in $files; do
         symlink $f
     done
-    [ -f $HOME/dotfiles/machine.sh ] || touch $HOME/dotfiles/machine.sh
     source $HOME/dotfiles/shell_config.sh
 }
 
