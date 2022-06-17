@@ -33,4 +33,6 @@ function install () {
     source $HOME/dotfiles/shell_config.sh
 }
 
+sh ./install_programs.sh
+
 install 
