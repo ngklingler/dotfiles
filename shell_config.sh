@@ -12,6 +12,7 @@ fi
 export EDITOR=code
 export VISUAL="$EDITOR"
 export GIT_EDITOR="code --wait"
+export PSQL_EDITOR="code --wait"
 
 cd () {
     builtin cd "$@" && ls; # ls after switching directory
