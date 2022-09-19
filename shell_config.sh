@@ -72,7 +72,7 @@ elif [ -n "$ZSH_VERSION" ]; then
     zstyle ':completion:*' accept-exact '*(N)'
     zstyle ':completion:*' use-cache on
     zstyle ':completion:*' cache-path ~/.zsh/cache
-    HISTFILE=~/.zhistory
+    HISTFILE=~/.zsh_history
     HISTSIZE=10000
     SAVEHIST=10000
 
