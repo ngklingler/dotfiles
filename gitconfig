@@ -6,6 +6,7 @@
     default = current
 [alias]
     track = "!git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`"
+    sync = "!git track; git pull; git push"
 [core]
     safeclrf = true
     autocrlf = input ;; on windows this should be set to true
@@ -17,4 +18,4 @@
 [init]
     defaultBranch = main
 [rebase]
-	autoStash = true
+    autoStash = true
