@@ -6,7 +6,10 @@
     default = current
 [alias]
     track = "!git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`"
-    sync = "!git track; git pull; git push"
+    sync = "!git track && git pull && git push --force-with-lease"
+    pf = "push --force-with-lease"
+    car = "commit --amend --reuse-message=HEAD"
+    cs = "!git commit -a -m 'autocommit' && git sync"
 [core]
     safeclrf = true
     autocrlf = input ;; on windows this should be set to true
@@ -19,3 +22,5 @@
     defaultBranch = main
 [rebase]
     autoStash = true
+[commit]
+    verbose = true
