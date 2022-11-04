@@ -1,12 +1,40 @@
 source shell_config.sh
 
+# need curl and git
+asdf () {
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+    cd ~/.asdf
+    git checkout `git describe --tags --abbrev=0`
+    . ./asdf.sh
+    cd -
+}
+
+direnv () {
+    asdf direnv setup --shell bash --version latest
+    asdf global direnv latest
+}
+
+fd () {
+    asdf plugin add fd
+    asdf install fd latest
+    asdf global fd latest
+}
+
+jq () {
+    asdf plugin add jq
+    asdf install jq latest
+    asdf global jq latest
+}
+
+asdf
+direnv
+fd
+jq
+
 # TODO curl may not exist, also depends on git
 [ -z "$(command -v brew)" ] && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-[ -z "$(command -v fd)" ] && brew install fd
 [ -z "$(command -v rg)" ] && brew install ripgrep
 [ -z "$(command -v pipx)" ] && brew install pipx
-[ -z "$(command -v jq)" ] && brew install jq
 
 
 # brew outputs bash completion file locations, capture and source
