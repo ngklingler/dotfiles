@@ -1,5 +1,6 @@
-[ -f $HOME/dotfiles/machine.sh ] && source $HOME/dotfiles/machine.sh
-[ -f $HOME/.env ] && source $HOME/.env
+[ -f $HOME/dotfiles/machine.sh ] && . $HOME/dotfiles/machine.sh
+[ -f $HOME/.env ] && . $HOME/.env
+[ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -9,10 +10,12 @@ if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
 fi
 
 [ "$(command -v firefox)" ] && alias ff=firefox
-export EDITOR=code
-export VISUAL="$EDITOR"
-export GIT_EDITOR="code --wait"
-export PSQL_EDITOR="code --wait"
+if [ "$(command -v code)" ]; then
+    export EDITOR=code
+    export VISUAL="$EDITOR"
+    export GIT_EDITOR="code --wait"
+    export PSQL_EDITOR="code --wait"
+fi
 
 cd () {
     builtin cd "$@" && ls; # ls after switching directory
@@ -40,6 +43,9 @@ if [ -n "$BASH_VERSION" ]; then
         bind -m vi-command '"ç": "\C-z\ec\C-z"'
         bind -m vi-insert '"ç": "\C-z\ec\C-z"'
     fi
+
+    [ "$(command -v direnv)" ] && eval "$(direnv hook bash)"
+    [ -f $HOME/.asdf/completions/asdf.bash ] && . $HOME/.asdf/completions/asdf.bash
 
     HISTSIZE=10000
     HISTCONTROL=erasedups
@@ -94,4 +100,5 @@ elif [ -n "$ZSH_VERSION" ]; then
         source ~/.fzf.zsh
         [ "$(uname -s)" = "Darwin" ] && bindkey "ç" fzf-cd-widget
     fi
+    [ "$(command -v direnv)" ] && eval "$(direnv hook zsh)"
 fi
