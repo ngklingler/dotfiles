@@ -9,7 +9,7 @@
     sync = "!git track && git pull && git push --force-with-lease"
     pf = "push --force-with-lease"
     car = "commit --amend --reuse-message=HEAD"
-    cs = "!git commit -a -m 'autocommit' && git sync"
+    cs = "!git add --all && git commit -m 'autocommit' && git sync"
 [core]
     safeclrf = true
     autocrlf = input ;; on windows this should be set to true
