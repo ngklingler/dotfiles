@@ -1,5 +1,3 @@
-Host github.com
-    IdentityFile ~/.ssh/github
-
-Host gitlab.com
-    IdentityFile ~/.ssh/gitlab
+Host *
+    IdentityFile ~/.ssh/key
+    StrictHostKeyChecking accept-new
