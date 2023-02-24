@@ -48,4 +48,6 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 
 git clone https://github.com/Aloxaf/fzf-tab $HOME/dotfiles/fzf-tab/
 
+[ ! -z "$(command -v wget)" ] && wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -q
+
 source shell_config.sh

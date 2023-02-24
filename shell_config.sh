@@ -4,9 +4,18 @@
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# Use my custom python prompt if available
-if [ -f $HOME/dotfiles/prompt.py ] && [ ! -z "$(command -v python3)" ]; then
-    export PS1='`python3 $HOME/dotfiles/prompt.py`'
+PROMPT_DIRTRIM=2
+if [ -f $HOME/dotfiles/git-prompt.sh ]; then
+    source $HOME/dotfiles/git-prompt.sh
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUNTRACKEDFILES=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    GIT_PS1_SHOWCONFLICTSTATE="yes"
+    GIT_PS1_SHOWCOLORHINTS=1
+    PROMPT_COMMAND='__git_ps1 "\w" " > " " %s"'
+else
+    PS1='\w > '
 fi
 
 [ "$(command -v firefox)" ] && alias ff=firefox
