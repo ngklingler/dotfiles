@@ -1,7 +1,8 @@
 [ -f $HOME/dotfiles/machine.sh ] && . $HOME/dotfiles/machine.sh
 [ -f $HOME/.env ] && . $HOME/.env
-[ -f $HOME/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh
+[ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
 
+export MYVIMRC=$HOME/.vimrc
 export PATH="$HOME/.local/bin:$PATH"
 
 PROMPT_DIRTRIM=2
@@ -18,7 +19,6 @@ else
     PS1='\w > '
 fi
 
-[ "$(command -v firefox)" ] && alias ff=firefox
 if [ "$(command -v code)" ]; then
     export EDITOR=code
     export VISUAL="$EDITOR"
@@ -51,9 +51,6 @@ if [ -n "$BASH_VERSION" ]; then
         bind -m vi-command '"ç": "\C-z\ec\C-z"'
         bind -m vi-insert '"ç": "\C-z\ec\C-z"'
     fi
-
-    [ "$(command -v direnv)" ] && eval "$(direnv hook bash)"
-    [ -f $HOME/.asdf/completions/asdf.bash ] && . $HOME/.asdf/completions/asdf.bash
 
     HISTSIZE=10000
     HISTCONTROL=erasedups
