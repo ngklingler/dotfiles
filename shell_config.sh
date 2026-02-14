@@ -26,8 +26,22 @@ if [ "$(command -v code)" ]; then
     export PSQL_EDITOR="code --wait"
 fi
 
+vi () {
+  if [ "$(command -v nvr)" ]; then nvr "$@";
+  elif [ "$(command -v nvim)" ]; then nvim "$@";
+  elif [ "$(command -v vim)" ]; then vim "$@";
+  else vi "$@";
+  fi
+}
+
+export EDITOR=vi
+export GIT_EDITOR=vi
+[ "$NVIM" ] && export GIT_EDITOR='nvr --remote-wait'
+export VISUAL=vi
+
 cd () {
     builtin cd "$@" && ls; # ls after switching directory
+    [ -z "$NVIM" ] || nvr --remote-send "<esc>:cd $(pwd)<cr>i"
 }
 
 if ! [ -z "$(command -v fd)" ]; then
