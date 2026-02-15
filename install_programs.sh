@@ -1,7 +1,7 @@
 source shell_config.sh
 
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+~/.fzf/install --all
 
 [ ! -z "$(command -v wget)" ] && wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -q
 

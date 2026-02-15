@@ -26,13 +26,13 @@ function symlink() {
 function install() {
   [ -d $HOME/dotfiles/old_dotfiles ] && rm -rf $HOME/dotfiles/old_dotfiles
   # TODO install git, pip, fzf
-  files="shell_config.sh gitconfig ssh/config vimrc"
+  files="shell_config.sh gitconfig ssh/config vimrc config/nvim/lua/plugins/core.lua"
   for f in $files; do
     symlink $f
   done
   source $HOME/dotfiles/shell_config.sh
 }
 
-# sh ./install_programs.sh
+sh ./install_programs.sh
 
 install

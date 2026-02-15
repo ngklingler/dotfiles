@@ -27,7 +27,7 @@ if [ "$(command -v code)" ]; then
 fi
 
 vi () {
-  if [ "$(command -v nvr)" ]; then nvr "$@";
+  if [ "$(command -v nvr)" ] && [ -n "$NVIM" ]; then nvr "$@";
   elif [ "$(command -v nvim)" ]; then nvim "$@";
   elif [ "$(command -v vim)" ]; then vim "$@";
   else vi "$@";
