@@ -41,7 +41,7 @@ export VISUAL=vi
 
 cd () {
     builtin cd "$@" && ls; # ls after switching directory
-    [ -z "$NVIM" ] || nvr --remote-send "<esc>:cd $(pwd)<cr>i"
+  [ -z "$NVIM" ] || nvr --remote-send "<c-\><c-n>:cd $(pwd)<cr>i"
 }
 
 if ! [ -z "$(command -v fd)" ]; then

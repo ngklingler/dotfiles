@@ -1,5 +1,6 @@
 [user]
-    name = Nick Klingler
+	name = Nick Klingler
+	email = nick@localhost
 [pull]
     rebase = true
 [push]
